@@ -256,9 +256,14 @@ input[type=time] { padding-inline: 8px; }
 input[aria-invalid="true"] { border-color: var(--bad); }
 .weeknav { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 
-#splash { position: fixed; inset: 0; z-index: 99999; display: flex; align-items: center; justify-content: center; background: linear-gradient(#23262d, #0c0d10); transition: opacity .65s ease; }
+#splash { position: fixed; inset: 0; z-index: 99999; display: flex; align-items: center; justify-content: center; background: linear-gradient(#23262d, #0c0d10); transition: opacity .35s ease; }
+#splash { flex-direction: column; gap: 0; }
 #splash.off { opacity: 0; pointer-events: none; }
-#splash img { width: 150px; height: 150px; border-radius: 34px; box-shadow: 0 10px 40px rgba(0,0,0,.5); animation: spl 1.4s ease-out both; }
+#splash .sbar { position: relative; width: 240px; max-width: 64vw; height: 4px; margin-top: 34px; border-radius: 3px; background: #2e2a1c; overflow: hidden; }
+#splash .sbar i { position: absolute; top: 0; bottom: 0; left: 0; width: 100%; border-radius: 3px; background: linear-gradient(90deg, #c9a13a, #f0cf6a, #c9a13a); transform-origin: 0 50%; transform: scaleX(0); animation: sfill .95s cubic-bezier(.25,.6,.3,1) forwards; }
+@keyframes sfill { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
+#splash .stx { margin-top: 22px; font: 500 14px/1 system-ui, -apple-system, "Segoe UI", sans-serif; letter-spacing: .2em; color: #c9a84c; text-transform: uppercase; opacity: .9; }
+#splash img { width: 150px; height: 150px; border-radius: 34px; box-shadow: 0 10px 40px rgba(0,0,0,.5); animation: spl .6s ease-out both; }
 @keyframes spl { from { opacity: 0; transform: scale(.88); } to { opacity: 1; transform: none; } }
 .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
 .brand .logo { width: 46px; height: 46px; border-radius: 11px; flex: 0 0 auto; box-shadow: 0 1px 4px rgba(0,0,0,.25); }
@@ -298,6 +303,12 @@ input[aria-invalid="true"] { border-color: var(--bad); }
 .f-time { grid-column: span 6; order: 3; flex-direction: row; gap: 8px; }
 .f-time .f { flex: 1; }
 .f-time .f-hrs { flex: 0 0 4.6rem; }
+.f-time { flex-wrap: wrap; }
+.f-time .tw { flex: 0 0 100%; display: flex; gap: 8px; }
+.f-time .tw .f { flex: 1; }
+.f-time .tw[hidden], .tw-add[hidden] { display: none; }
+.f-time .tw-del { flex: 0 0 42px; width: 42px; height: 42px; align-self: flex-end; font-size: 1.4rem; line-height: 1; padding: 0; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; }
+.f-time .tw-add { flex: 0 0 100%; height: auto; min-height: 34px; font-size: .85rem; }
 .f-pause { grid-column: span 2; order: 4; }
 .f-hin { order: 5; } .f-zur { order: 6; } .f-abs { order: 7; }
 .f-hin, .f-zur, .f-abs { grid-column: span 2; }
@@ -474,6 +485,8 @@ h1 { color: #2c2166; }
 .sheet.logo .actions { justify-content: center; gap: 8px; margin: 0 14px; }
 .sheet.logo .btn { display: inline-flex; align-items: center; gap: 7px; height: 46px; padding: 0 10px; border-radius: 10px; font-size: .92rem; white-space: nowrap; background: #12151f; color: #fff; border: 1.5px solid #d4af5a !important; box-shadow: inset 0 1px 0 rgba(255,255,255,.08) !important; font-weight: 600; }
 .sheet.logo .btn.primary { background: linear-gradient(180deg, #1f2a66, #0c1238); text-shadow: none; color: #fff; }
+a.btn { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; color: var(--text, #1a1d24); }
+a.btn.primary { color: #f3d98f !important; }
 .sheet.logo .btn svg { width: 20px; height: 20px; flex: none; }
 .thbtn { all: unset; cursor: pointer; box-sizing: border-box; flex: 0 0 auto; position: relative; width: 48px; height: 48px; border-radius: 15px; background: var(--surface); border: 1.5px solid #cdae6a; display: grid; place-items: center; color: var(--ink); box-shadow: 0 6px 14px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.35); }
 .thbtn svg { width: 26px; height: 26px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; }
@@ -484,7 +497,7 @@ h1 { color: #2c2166; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .thbtn { color: #e9cd82; box-shadow: 0 6px 16px rgba(0,0,0,.6), 0 0 12px rgba(205,174,106,.25), inset 0 1px 0 rgba(255,255,255,.1); } }
 </style><style>#demobar{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:nowrap;padding:6px 8px calc(6px + env(safe-area-inset-bottom));background:#2a1f5c;color:#fff;font:600 12px system-ui,sans-serif;box-shadow:0 -2px 10px rgba(0,0,0,.25)}#demobar button{font:inherit;border:1px solid #d4b061;background:transparent;color:#f3dca0;border-radius:999px;padding:5px 11px;white-space:nowrap}#demobar button.on{background:#d4b061;color:#2a1f5c}body{padding-bottom:52px}</style>
 </head><body>
-<div id="splash" aria-hidden="true"><img id="splashImg" alt=""></div>
+<div id="splash" aria-hidden="true"><img id="splashImg" alt=""><div class="sbar"><i></i></div><div class="stx">Rapport wird geladen</div></div>
 <script>(function(){try{var l=document.querySelector('link[rel="apple-touch-icon"]');document.getElementById("splashImg").src=l.href;window.__ico=l.href}catch(e){}setTimeout(function(){var s=document.getElementById("splash");if(s)s.remove()},6000)})();</script>
 
 <div class="wrap">
@@ -517,9 +530,11 @@ h1 { color: #2c2166; }
           <label id="regKtBox" for="regKt"><span class="lbl">Sitz der Firma (Kanton, für die Feiertage)</span><select id="regKt"><option value="ZH">Zürich</option><option value="AG">Aargau</option><option value="ZG">Zug</option><option value="OW">Obwalden</option></select></label>
           <label for="regFeld"><span class="lbl" id="regLbl">Firmenname</span><input type="text" id="regFeld" autocomplete="off" autocapitalize="characters" placeholder="z. B. Maler Muster AG"></label>
           <div class="status" id="regHint"></div>
+          <label for="regOk" style="display:flex;gap:10px;align-items:flex-start;flex-direction:row;font-size:14px;line-height:1.4"><input type="checkbox" id="regOk" style="width:22px;height:22px;flex:0 0 auto;margin:1px 0 0"><span>Ich habe die <a href="#" id="regLegal">Nutzungsbedingungen und die Datenschutzerklärung</a> gelesen und bin einverstanden. Mir ist bewusst, dass dies ein privater Test ist und der Entwickler alle Daten sehen kann.</span></label>
         </div>
         <div class="actions"><button type="submit" class="btn primary" id="doLogin">Anmelden</button><button type="button" class="btn" id="doSignup">Registrieren</button><button type="button" class="btn" id="regBack" hidden>Zurück zur Anmeldung</button></div>
       </div>
+      <p id="legalNote" style="margin:10px 0 0;font-size:12px;opacity:.8">Privater Test. Mit dem Anmelden gelten die <a href="#" id="legalLink">Nutzung &amp; Datenschutz</a>.</p>
       <div id="authIn" class="actions" hidden><button type="button" class="btn" id="syncNow">Jetzt synchronisieren</button><button type="button" class="btn" id="pwBtn">Passwort ändern</button><button type="button" class="btn" id="doLogout">Abmelden</button></div>
       <div id="pwBox" style="display:flex;flex-direction:column;gap:10px;margin-top:10px" hidden>
         <label for="pwNeu"><span class="lbl">Neues Passwort</span><input type="password" id="pwNeu" autocomplete="new-password" minlength="6" placeholder="mindestens 6 Zeichen"></label>
@@ -538,6 +553,7 @@ h1 { color: #2c2166; }
       <div class="status" id="status" role="status"></div>
     </div>
     <button class="btn primary" id="pdf" type="button">Woche speichern und PDF erstellen</button>
+    <button class="btn" id="pdf2" type="button">PDF für E-Mail (Gmail) öffnen</button>
   </div>
 
   <div class="foot">
@@ -646,24 +662,34 @@ window.supabase={createClient:function(){var cb=null,session=null;window.__reps=
   function num(s) { var v = parseFloat(String(s == null ? "" : s).replace(",", ".")); return isFinite(v) && v > 0 ? v : 0; }
   function hm(min) { min = Math.round(min); return Math.floor(min / 60) + "." + pad(min % 60); }
   function fmtAbs(v) { return v ? String(Math.round(v * 100) / 100).replace(".", ",") : ""; }
-  function effs(rows) { /* Überschneidungen: jede Minute zählt nur einmal, und zwar für den kürzesten (genauesten) Eintrag */
-    var R = rows.map(function (e) { var a = tmin(e.von), b = tmin(e.bis); return (a !== null && b !== null && b > a) ? { a: a, b: b } : null; });
+  function wins(e) { /* bis zu 3 Zeitfenster pro Eintrag: von/bis, von2/bis2, von3/bis3 */
+    var out = [];
+    ["", "2", "3"].forEach(function (k) {
+      var v = e["von" + k], bs = e["bis" + k]; if (!v && !bs) return;
+      var a = tmin(v), b = tmin(bs), bad = !!((v && a === null) || (bs && b === null) || (a !== null && b !== null && b <= a));
+      out.push({ a: a, b: b, bad: bad, ok: a !== null && b !== null && b > a });
+    });
+    return out;
+  }
+  function effs(rows) { /* Überschneidungen: jede Minute zählt nur einmal, und zwar für das kürzeste (genaueste) Zeitfenster */
+    var R = rows.map(function (e) { return wins(e).filter(function (x) { return x.ok; }); });
     var out = rows.map(function () { return { gross: 0, night: 0 }; }), pts = [];
-    R.forEach(function (x) { if (x) { pts.push(x.a, x.b); } });
+    R.forEach(function (l) { l.forEach(function (x) { pts.push(x.a, x.b); }); });
     pts = pts.filter(function (v, i) { return pts.indexOf(v) === i; }).sort(function (u, v) { return u - v; });
     for (var i = 0; i + 1 < pts.length; i++) {
-      var p = pts[i], q = pts[i + 1], best = -1;
-      R.forEach(function (x, k) { if (x && x.a <= p && x.b >= q && (best < 0 || (x.b - x.a) < (R[best].b - R[best].a))) best = k; });
+      var p = pts[i], q = pts[i + 1], best = -1, bl = 1e9;
+      R.forEach(function (l, k) { l.forEach(function (x) { if (x.a <= p && x.b >= q && (x.b - x.a) < bl) { bl = x.b - x.a; best = k; } }); });
       if (best >= 0) { out[best].gross += q - p; out[best].night += ovl(p, q, 0, 360) + ovl(p, q, 1200, 1440); out[best].n1 = (out[best].n1 || 0) + ovl(p, q, 0, 360); out[best].n2 = (out[best].n2 || 0) + ovl(p, q, 1200, 1440); }
     }
     return out;
   }
   function calcRow(e, ef) {
-    var a = tmin(e.von), b = tmin(e.bis), gross = 0, work = 0;
-    var invalid = !!((e.von && a === null) || (e.bis && b === null) || (a !== null && b !== null && b <= a));
-    if (a !== null && b !== null && b > a) { gross = ef ? ef.gross : b - a; work = Math.max(0, gross - num(e.pause)); }
+    var ws = wins(e), ok = ws.filter(function (x) { return x.ok; }), gross = 0, work = 0;
+    var invalid = ws.some(function (x) { return x.bad; });
+    var a = ok.length ? Math.min.apply(null, ok.map(function (x) { return x.a; })) : null, b = ok.length ? Math.max.apply(null, ok.map(function (x) { return x.b; })) : null;
+    if (ok.length) { gross = ef ? ef.gross : ok.reduce(function (t, x) { return t + x.b - x.a; }, 0); work = Math.max(0, gross - num(e.pause)); }
     var hin = num(e.hin), zur = num(e.zur);
-    return { gross: gross, work: work, pause: num(e.pause), hin: hin, zur: zur, reise: hin + zur, abs: num(e.abs), invalid: invalid, hasTime: a !== null && b !== null && !invalid, von: a, bis: b };
+    return { gross: gross, work: work, pause: num(e.pause), hin: hin, zur: zur, reise: hin + zur, abs: num(e.abs), invalid: invalid, hasTime: ok.length > 0 && !invalid, von: a, bis: b, wins: ok };
   }
   function rowTara(ds, c) { /* Reisezeit-Abzug gehört zur Baustelle, bei der die Reisezeit eingetragen ist (insgesamt höchstens der Tagesabzug) */
     return ds.reise > 0 ? Math.min(c.work, ds.tara * c.reise / ds.reise) : 0;
@@ -680,7 +706,7 @@ window.supabase={createClient:function(){var cb=null,session=null;window.__reps=
     days.forEach(function (d) { var s = dayStats(d); Object.keys(t).forEach(function (k) { t[k] += s[k]; }); });
     return t;
   }
-  function blank() { return { nr: "", obj: "", obj2: "", von: "", bis: "", pause: "", hin: "", zur: "", abs: "" }; }
+  function blank() { return { nr: "", obj: "", obj2: "", von: "", bis: "", von2: "", bis2: "", von3: "", bis3: "", pause: "", hin: "", zur: "", abs: "" }; }
   function emptyWeek() { return DAYS.map(function () { return [blank()]; }); }
   function isEmptyEntry(e) { return !(e.nr || e.obj || e.von || e.bis || e.pause || e.hin || e.zur || e.abs); }
 
@@ -745,7 +771,7 @@ window.supabase={createClient:function(){var cb=null,session=null;window.__reps=
     if (/keine berechtigung/i.test(m)) return "Dafür brauchst du Administrator-Rechte.";
     if (/ungültige rolle|members_rolle_check/i.test(m)) return "Die Rolle «Temporär» ist in Supabase noch nicht eingerichtet (Zusatz-SQL fehlt).";
     if (/firma_wochen/i.test(m) && /schema cache|does not exist|could not find/i.test(m)) return "Die Auswertung ist in Supabase noch nicht eingerichtet (Zusatz-SQL fehlt).";
-    if (/firma_code|member_passwort|firma_anlegen|code_gueltig|firma_frei/i.test(m) && /schema cache|does not exist|could not find/i.test(m)) return "Die Firmen-Verwaltung ist in Supabase noch nicht eingerichtet (Zusatz-SQL fehlt).";
+    if (/firma_code|member_passwort|member_email_wechseln|firma_anlegen|code_gueltig|firma_frei/i.test(m) && /schema cache|does not exist|could not find/i.test(m)) return "Die Firmen-Verwaltung ist in Supabase noch nicht eingerichtet (Zusatz-SQL fehlt).";
     if (/members_list|member_set|member_remove|pending_delete/i.test(m) && /schema cache|does not exist|could not find/i.test(m)) return "Die Mitarbeiter-Verwaltung ist in Supabase noch nicht eingerichtet (Zusatz-SQL fehlt).";
     if (/my_member|sites_write|schema cache|does not exist|could not find/i.test(m)) return "Die Firmenliste ist in Supabase noch nicht eingerichtet (SQL fehlt).";
     if (/fetch|network|load failed/i.test(m)) return "Keine Verbindung. Zum Ändern der Liste brauchst du Internet.";
@@ -928,9 +954,30 @@ window.supabase={createClient:function(){var cb=null,session=null;window.__reps=
   }
 
   /* ---------- Konto (Anmelden / Registrieren) ---------- */
+  var LEGAL_VER = "2026-10-31";
+  function legalOk() { return lsGet("demo:legal") === LEGAL_VER; }
+  function legalGate() {
+    if (!user || legalOk() || $("legalGate")) return;
+    var ok = el("input", { type: "checkbox", id: "lgOk", style: "width:22px;height:22px;flex:0 0 auto;margin:1px 0 0" });
+    var lk = el("a", { href: "#", text: "Nutzungsbedingungen und Datenschutzerklärung" });
+    lk.addEventListener("click", function (e) { e.preventDefault(); openLegal(); });
+    var lb = el("label", { style: "display:flex;gap:10px;align-items:flex-start;flex-direction:row;font-size:14px;line-height:1.4;margin:14px 0" }, [ok, el("span", {}, [document.createTextNode("Ich habe die "), lk, document.createTextNode(" gelesen und bin einverstanden.")])]);
+    var go = el("button", { type: "button", "class": "btn primary", text: "Weiter" }); go.disabled = true;
+    ok.addEventListener("change", function () { go.disabled = !ok.checked; });
+    go.addEventListener("click", function () { if (!ok.checked) return; lsSet("demo:legal", LEGAL_VER); ov.remove(); });
+    var sheet = el("div", { "class": "sheet", style: "max-height:88vh;overflow:auto" }, [
+      el("h2", { text: "Information" }),
+      el("p", { text: "Mitarbeiter: " + ((($("name") && $("name").value) || "").trim() || (user && user.email) || ""), style: "font-weight:700;margin:0 0 8px" }),
+      el("p", { text: "Die App ist ein privater Test von Bader Design. Es gibt keine Garantie und keine Haftung, Berechnungen sind unverbindlich. Der Entwickler kann alle Daten sehen. Die Daten liegen in einer Datenbank in Zürich und werden nachts gesichert." }),
+      lb, el("div", { "class": "actions" }, [go])]);
+    var ov = el("div", { "class": "overlay sites", id: "legalGate", role: "dialog", "aria-modal": "true", "aria-label": "Zustimmung" }, [sheet]);
+    ov.style.zIndex = "100000";
+    document.body.appendChild(ov);
+  }
   function authMsg(t, c) { var m = $("authMsg"); m.textContent = t || ""; m.className = "status" + (c ? " " + c : ""); }
   function renderAuth() {
     var hint = $("authHint");
+    if (user && !legalOk()) setTimeout(legalGate, 1700);
     $("authFields").hidden = !!user || !!cloudOff; $("authIn").hidden = !user; if (!user) $("pwBox").hidden = true;
     $("acctBtn").textContent = user ? (user.email || "Konto") : "Anmelden";
     var gate = gateOn();
@@ -963,6 +1010,8 @@ window.supabase={createClient:function(){var cb=null,session=null;window.__reps=
     var meta = null;
     if (mode === "up") {
       var fv = $("regFeld").value.trim();
+      if (!$("regOk").checked) { authMsg("Bitte zuerst bestätigen, dass du die Nutzungsbedingungen und die Datenschutzerklärung gelesen hast (Häkchen setzen).", "bad"); return; }
+      lsSet("demo:legal", LEGAL_VER);
       if (regMode === "neu" && fv.length < 2) { authMsg("Bitte den Firmennamen eingeben.", "bad"); return; }
       if (regMode === "code" && fv.replace(/[^A-Za-z0-9]/g, "").length !== 6) { authMsg("Bitte den Firmen-Code eingeben (6 Zeichen, z. B. K7M-2Q9).", "bad"); return; }
     }
@@ -1003,7 +1052,7 @@ window.supabase={createClient:function(){var cb=null,session=null;window.__reps=
     $("regHint").textContent = m === "neu" ? "Du wirst Administrator dieser Firma und siehst danach den Firmen-Code für deine Mitarbeiter." : "Den Code bekommst du vom Chef. Er nimmt dich danach in der App auf.";
   }
   function regShow(on) {
-    $("regBox").hidden = !on; $("doLogin").hidden = on; $("regBack").hidden = !on; authMsg("");
+    $("regBox").hidden = !on; $("legalNote").hidden = on; $("doLogin").hidden = on; $("regBack").hidden = !on; authMsg("");
     if (on) { regSet(regMode); $("regFeld").focus(); }
   }
   $("regNeu").addEventListener("click", function () { regSet("neu"); });
@@ -1033,6 +1082,9 @@ window.supabase={createClient:function(){var cb=null,session=null;window.__reps=
   function fieldInput(id, cls, label, attrs, val) {
     return '<label class="f ' + cls + '" for="' + id + '"><span>' + label + '</span><input id="' + id + '" ' + attrs + ' value="' + String(val).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;") + '"></label>';
   }
+  function twHtml(p, e, k) { var has = !!(e["von" + k] || e["bis" + k]);
+    return '<div class="tw" data-tw="' + k + '"' + (has ? "" : " hidden") + '>' + fieldInput(p + "von" + k, "", k + ". Zeitfenster von", 'type="text" inputmode="decimal" data-k="von' + k + '" autocomplete="off" placeholder="12.30"', e["von" + k]) + fieldInput(p + "bis" + k, "", "bis", 'type="text" inputmode="decimal" data-k="bis' + k + '" autocomplete="off" placeholder="14.50"', e["bis" + k]) + '<button type="button" class="tw-del" data-tw-del="' + k + '" aria-label="' + k + '. Zeitfenster entfernen" title="Zeitfenster entfernen">\u2212</button></div>';
+  }
   function rowHtml(di, ri, e) {
     var p = "d" + di + "r" + ri + "-";
     return '<div class="row" data-d="' + di + '" data-r="' + ri + '">' +
@@ -1040,7 +1092,7 @@ window.supabase={createClient:function(){var cb=null,session=null;window.__reps=
       '<div class="f f-obj"><span>Baustelle / Objekt</span>' +
         '<input type="text" id="' + p + 'obj" data-k="obj" autocomplete="off" placeholder="Baustelle suchen" value="' + esc(e.obj) + '">' +
         '<input type="text" id="' + p + 'obj2" data-k="obj2" autocomplete="off" aria-label="Baustelle, zweite Zeile" placeholder="2. Zeile (optional)" value="' + esc(e.obj2) + '"></div>' +
-      '<div class="f f-time">' + fieldInput(p + "von", "", "Arbeitszeit von", 'type="text" inputmode="decimal" data-k="von" autocomplete="off" placeholder="6.25"', e.von) + fieldInput(p + "bis", "", "bis", 'type="text" inputmode="decimal" data-k="bis" autocomplete="off" placeholder="16.14"', e.bis) + '<div class="f f-hrs"><span>Stunden</span><div class="calc" data-c="gross"></div></div></div>' +
+      '<div class="f f-time">' + fieldInput(p + "von", "", "Arbeitszeit von", 'type="text" inputmode="decimal" data-k="von" autocomplete="off" placeholder="6.25"', e.von) + fieldInput(p + "bis", "", "bis", 'type="text" inputmode="decimal" data-k="bis" autocomplete="off" placeholder="16.14"', e.bis) + '<div class="f f-hrs"><span>Stunden</span><div class="calc" data-c="gross"></div></div>' + twHtml(p, e, "2") + twHtml(p, e, "3") + '<button type="button" class="add tw-add" data-tw-add' + ((e.von3 || e.bis3) ? " hidden" : "") + '>+ Zeitfenster (z. B. nach der Pause)</button></div>' +
       fieldInput(p + "pause", "f-pause", "Pause in Min.", 'type="text" inputmode="numeric" data-k="pause" autocomplete="off" placeholder="60"', e.pause) +
       '<div class="f f-total"><span>Total ohne Pausen</span><div class="calc" data-c="work"></div></div>' +
       fieldInput(p + "hin", "f-hin", "Reise hin (Min.)", 'type="text" inputmode="numeric" data-k="hin" autocomplete="off"', e.hin) +
@@ -1115,6 +1167,15 @@ window.supabase={createClient:function(){var cb=null,session=null;window.__reps=
     recalc(); persist();
   });
   $("days").addEventListener("click", function (ev) {
+    var twd = ev.target.closest ? ev.target.closest("[data-tw-del]") : null;
+    if (twd) {
+      var rw2 = twd.closest(".row"), en = state.days[+rw2.dataset.d][+rw2.dataset.r], kk = twd.dataset.twDel;
+      if (kk === "2") { en.von2 = en.von3 || ""; en.bis2 = en.bis3 || ""; }
+      en.von3 = ""; en.bis3 = "";
+      renderAll(); persist(); return;
+    }
+    var twb = ev.target.closest ? ev.target.closest("[data-tw-add]") : null;
+    if (twb) { var rw = twb.closest(".row"), hid = rw.querySelector(".tw[hidden]"); if (hid) { hid.hidden = false; var fi = hid.querySelector("input"); if (fi) fi.focus(); } if (!rw.querySelector(".tw[hidden]")) twb.hidden = true; return; }
     var add = ev.target.closest("[data-add]"), del = ev.target.closest("[data-del]");
     if (add) { var di = +add.dataset.add; if (state.days[di].length < MAXROWS) { state.days[di].push(blank()); renderAll(); var r = document.querySelectorAll('.day')[di].querySelectorAll('.row'); var f = r[r.length - 1].querySelector('input'); if (f) f.focus(); persist(); } }
     if (del) { var row = del.closest(".row"), d = +row.dataset.d, r2 = +row.dataset.r; if (state.days[d].length > 1) { state.days[d].splice(r2, 1); renderAll(); persist(); } }
@@ -1139,7 +1200,7 @@ window.supabase={createClient:function(){var cb=null,session=null;window.__reps=
     renderAll(); persist();
   });
   $("days").addEventListener("focusout", function (ev) {
-    var inp = ev.target, row = inp.closest ? inp.closest(".row") : null; if (!row || (inp.dataset.k !== "von" && inp.dataset.k !== "bis")) return;
+    var inp = ev.target, row = inp.closest ? inp.closest(".row") : null; if (!row || !/^(von|bis)[23]?$/.test(inp.dataset.k || "")) return;
     var v = tmin(inp.value); if (v === null || !inp.value) return;
     var n = fmtT(v); if (n !== inp.value) { inp.value = n; state.days[+row.dataset.d][+row.dataset.r][inp.dataset.k] = n; recalc(); persist(); }
   });
@@ -1216,7 +1277,7 @@ window.supabase={createClient:function(){var cb=null,session=null;window.__reps=
         if (e.nr) txt(1, y1, e.nr, 7.5, false, "c");
         if (e.obj) txt(2, y1, e.obj, 7.5);
         if (e.obj2) txt(2, y2, e.obj2, 7.5);
-        if (c.hasTime) { txt(3, y1, fmtT(c.von) + " Uhr bis " + fmtT(c.bis) + " Uhr = " + hm(c.gross), 7.5, false, "c"); txt(5, y1, hm(c.work), 7.5, false, "c"); }
+        if (c.hasTime) { txt(3, y1, c.wins.length > 1 ? c.wins.map(function (x) { return fmtT(x.a) + "-" + fmtT(x.b); }).join(" + ") + " = " + hm(c.gross) : fmtT(c.von) + " Uhr bis " + fmtT(c.bis) + " Uhr = " + hm(c.gross), c.wins.length > 1 ? 6.5 : 7.5, false, "c"); txt(5, y1, hm(c.work), 7.5, false, "c"); }
         if (num(e.pause)) txt(4, y1, Math.round(num(e.pause)), 7.5, false, "c");
         if (c.hin) txt(6, y1, Math.round(c.hin), 7.5, false, "c");
         if (c.zur) txt(7, y1, Math.round(c.zur), 7.5, false, "c");
@@ -1277,7 +1338,7 @@ window.supabase={createClient:function(){var cb=null,session=null;window.__reps=
     close.addEventListener("click", closeSheet); actions.appendChild(close);
     var sheet = el("div", { "class": "sheet" }, [
       el("h2", { text: label + " ist fertig" }),
-      el("p", { text: "Direktes Speichern ist hier nicht möglich. Tippe auf «" + label + " öffnen», dann auf das Teilen-Symbol und wähle «In Dateien sichern». " + fn }),
+      el("p", { text: "Tippe auf «" + label + " öffnen», dann unten auf das Teilen-Symbol. Dort wählst du Gmail oder Mail (das PDF hängt dann an der E-Mail) oder «In Dateien sichern». " + fn }),
       actions, holder]);
     var ov = el("div", { "class": "overlay", id: "sheet", role: "dialog", "aria-modal": "true", "aria-label": label + " sichern" }, [sheet]);
     if (url) ov.dataset.url = url;
@@ -1290,9 +1351,10 @@ window.supabase={createClient:function(){var cb=null,session=null;window.__reps=
     var mobile = isMobile(), file = null;
     try { file = new File([blob], fn, { type: "application/pdf" }); } catch (e) { }
     /* 1. Handy: Teilen-Menü (direkt nach dem Tippen, ohne vorheriges Warten) */
-    if (mobile && file && navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
+    var viaSheet = !!window.__pdfSheet; window.__pdfSheet = false;
+    if (!viaSheet && mobile && file && navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
       try {
-        await navigator.share({ files: [file], title: fn.replace(/\.pdf$/, "") });
+        await navigator.share({ files: [file], title: fn.replace(/\.pdf$/, ""), text: fn.replace(/\.pdf$/, "").replace(/_/g, " ") });
         markSent(wkSent); await saved; setStatus("Woche gespeichert. PDF geteilt: " + fn, "ok"); return;
       } catch (e) {
         if (e && e.name === "AbortError") { await saved; setStatus("Teilen abgebrochen. Die Woche ist gespeichert. Tippe nochmals auf den Knopf, um das PDF zu teilen.", ""); return; }
@@ -1303,6 +1365,7 @@ window.supabase={createClient:function(){var cb=null,session=null;window.__reps=
     await saved; setStatus("Woche gespeichert. Das PDF liegt in der Vorschau bereit.", "ok");
   }
 
+  $("pdf2").addEventListener("click", function () { window.__pdfSheet = true; $("pdf").click(); });
   $("pdf").addEventListener("click", function () {
     var btn = $("pdf"); btn.disabled = true;
     var saved = persist(true).catch(function () { }); /* nicht abwarten: Teilen muss direkt auf das Tippen folgen */
@@ -1486,8 +1549,8 @@ window.supabase={createClient:function(){var cb=null,session=null;window.__reps=
     var say = function (t, c) { msg.textContent = t || ""; msg.className = "status" + (c ? " " + c : ""); };
     var fh = el("div", { "class": "lbl", text: "Neue Baustelle" });
     var fnr = el("input", { type: "text", inputmode: "numeric", placeholder: "Nr.", autocomplete: "off", "aria-label": "Baustellen-Nr." });
-    var fn1 = el("input", { type: "text", placeholder: "Name / Adresse", autocomplete: "off", "aria-label": "Name oder Adresse" });
-    var fn2 = el("input", { "class": "full", type: "text", placeholder: "2. Zeile (optional)", autocomplete: "off", "aria-label": "Zweite Zeile" });
+    var fn1 = el("textarea", { rows: "1", placeholder: "Name / Adresse", autocomplete: "off", "aria-label": "Name oder Adresse", maxlength: "200" });
+    var fn2 = el("textarea", { "class": "full", rows: "1", placeholder: "2. Zeile (optional)", autocomplete: "off", "aria-label": "Zweite Zeile", maxlength: "200" });
     var ffa = el("textarea", { "class": "bulk full", placeholder: "Farbtöne und Hersteller (optional), z. B.\nWand: NCS S 1005-Y20R, Caparol\nDecke: Weiss, Brillux", "aria-label": "Farbtöne und Hersteller", maxlength: "2000" }); ffa.style.minHeight = "90px";
     function grow() { ffa.style.height = "auto"; ffa.style.height = Math.min(ffa.scrollHeight + 4, Math.round(window.innerHeight * 0.5)) + "px"; }
     ffa.addEventListener("focus", function () { grow(); setTimeout(function () { try { ffa.scrollIntoView({ block: "center", behavior: "smooth" }); } catch (e) { } }, 300); });
@@ -1496,6 +1559,10 @@ window.supabase={createClient:function(){var cb=null,session=null;window.__reps=
     var ftz = el("input", { type: "text", inputmode: "numeric", placeholder: "Fahrt zurück (Min.)", autocomplete: "off", "aria-label": "Fahrzeit zurück in Minuten" });
     var save = el("button", { type: "button", "class": "btn primary", text: "Hinzufügen" }), cancel = el("button", { type: "button", "class": "btn", text: "Abbrechen", hidden: "" });
     var form = el("div", { "class": "sform" }, [fnr, fn1, fn2, ffa, el("div", { "class": "trv full" }, [fth, ftz]), el("div", { "class": "status full", text: "Fahrzeit pro Weg in Minuten. Leer lassen bei «zurück», wenn der Rückweg gleich lang ist." }), el("div", { "class": "actions full" }, [save, cancel])]);
+    [fn1, fn2].forEach(function (t) { t.style.cssText = "resize:none;overflow:hidden;min-height:42px;line-height:1.3;padding-top:10px;padding-bottom:10px;font:inherit"; t.addEventListener("keydown", function (ev) { if (ev.key === "Enter") ev.preventDefault(); }); t.addEventListener("input", function () { fitTa(t); }); });
+    function fitTa(t) { t.style.height = "auto"; t.style.height = Math.max(42, t.scrollHeight + 2) + "px"; }
+    function gAll() { fitTa(fn1); fitTa(fn2); if (typeof grow === "function") try { } catch (e) { } }
+    form.addEventListener("focusin", function (ev) { var t = ev.target; setTimeout(function () { try { t.scrollIntoView({ block: "center", behavior: "smooth" }); } catch (e) { } }, 350); });
     var seedBtn = el("button", { type: "button", "class": "btn", text: "Meine Baustellen aus dem Ordner laden (26001–26017)" });
     var upBtn = el("button", { type: "button", "class": "btn", text: "" });
     var ta = el("textarea", { "class": "bulk", placeholder: "26018 Garantie Müller, Dorfstrasse 4\n26019 Familie Huber, Seeweg 2; Küche", "aria-label": "Mehrere Baustellen einfügen" });
@@ -1509,7 +1576,7 @@ window.supabase={createClient:function(){var cb=null,session=null;window.__reps=
                          : [el("h2", { text: "Baustellen" }), intro, info, q, cnt, list, el("div", { "class": "actions" }, [close])];
     var ov = el("div", { "class": "overlay sites", id: "sites", role: "dialog", "aria-modal": "true", "aria-label": adminView ? "Baustelle hinzufügen" : "Baustellen" }, [el("div", { "class": "sheet" }, kids)]);
 
-    function reset() { editNr = null; fnr.value = ""; fn1.value = ""; fn2.value = ""; ffa.value = ""; fth.value = ""; ftz.value = ""; fh.textContent = "Neue Baustelle"; save.textContent = "Hinzufügen"; cancel.hidden = true; }
+    function reset() { editNr = null; fnr.value = ""; fn1.value = ""; fn2.value = ""; setTimeout(gAll, 0); ffa.value = ""; fth.value = ""; ftz.value = ""; fh.textContent = "Neue Baustelle"; save.textContent = "Hinzufügen"; cancel.hidden = true; }
     async function run(fn, okText) {
       if (busy) return false; busy = true; say("Einen Moment …");
       try {
@@ -1529,7 +1596,7 @@ window.supabase={createClient:function(){var cb=null,session=null;window.__reps=
         var row = [t];
         if (can) {
           var ed = el("button", { type: "button", text: "Ändern" }), de = el("button", { type: "button", "class": "x", text: "Löschen" });
-          ed.addEventListener("click", function () { editNr = x.nr; fnr.value = x.nr; fn1.value = x.n; fn2.value = x.n2 || ""; ffa.value = x.f || ""; fth.value = x.h || ""; ftz.value = x.z || ""; fh.textContent = "Baustelle " + x.nr + " ändern"; save.textContent = "Änderung speichern"; cancel.hidden = false; say(""); fn1.focus(); });
+          ed.addEventListener("click", function () { editNr = x.nr; fnr.value = x.nr; fn1.value = x.n; fn2.value = x.n2 || ""; setTimeout(gAll, 0); ffa.value = x.f || ""; fth.value = x.h || ""; ftz.value = x.z || ""; fh.textContent = "Baustelle " + x.nr + " ändern"; save.textContent = "Änderung speichern"; cancel.hidden = false; say(""); fn1.focus(); });
           de.addEventListener("click", async function () { if (confirm("Baustelle " + x.nr + " löschen?")) { var ok = await run(function () { return sitesSave([], [x.nr]); }, "Gelöscht: " + x.nr); if (ok && editNr === x.nr) reset(); } });
           row.push(ed, de);
         }
@@ -1723,7 +1790,17 @@ window.supabase={createClient:function(){var cb=null,session=null;window.__reps=
               run(function () { return call("member_passwort", { p_email: r.email, p_pw: v }); }, "Neues Passwort für " + r.email + " gesetzt. Gib es der Person weiter. Sie kann es danach selbst ändern (Konto → Passwort ändern).");
             });
           }
-          if (!isBuero()) kids.push(tog); if (bu) kids.push(bu); if (tmp) kids.push(tmp); if (pwb) kids.push(pwb); kids.push(del);
+          var emb = null;
+          if (isAdmin()) {
+            emb = el("button", { type: "button", text: "E-Mail ändern" });
+            emb.addEventListener("click", function () {
+              var v = window.prompt("Neue E-Mail-Adresse für " + r.email + ". Alle Daten (Rapporte, Konto) bleiben erhalten. Die Person meldet sich danach mit der neuen Adresse und dem bisherigen Passwort an.", "");
+              if (v === null) return; v = v.trim().toLowerCase();
+              if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)) { say("Bitte eine gültige E-Mail-Adresse eingeben.", "bad"); return; }
+              run(function () { return call("member_email_wechseln", { p_alt: r.email, p_neu: v }); }, "E-Mail geändert: " + r.email + " → " + v + ". Die Person meldet sich mit der neuen Adresse an (Passwort bleibt gleich).");
+            });
+          }
+          if (!isBuero()) kids.push(tog); if (bu) kids.push(bu); if (tmp) kids.push(tmp); if (pwb) kids.push(pwb); if (emb) kids.push(emb); kids.push(del);
         }
         list.appendChild(el("div", { "class": "srow stack", role: "listitem" }, kids.length > 1 ? [kids[0], el("div", { "class": "acts" }, kids.slice(1))] : kids));
       });
@@ -2275,7 +2352,10 @@ function openReport(pre) {
         cell(h);
         doc.setFont("helvetica", "normal"); doc.setFontSize(9);
         doc.text(dm(fromKey(d.day)) + String(fromKey(d.day).getFullYear()).slice(2), x0[0] + 2, y + 4.8);
-        if (bk.r && cwR) { doc.setFont("helvetica", "bold"); doc.text("R", xR + cwR / 2, y + 4.8, { align: "center" }); doc.setFont("helvetica", "normal"); }
+        if (bk.r && cwR) {
+          var snt = !!d.rSent; doc.setFont("helvetica", "bold"); doc.text("R", xR + (snt ? 1.9 : cwR / 2), y + 4.8, { align: "center" }); doc.setFont("helvetica", "normal");
+          if (snt) { doc.setLineWidth(0.4); doc.line(xR + 3.5, y + 3.6, xR + 4.2, y + 4.5); doc.line(xR + 4.2, y + 4.5, xR + 5.5, y + 2.4); doc.setLineWidth(0.15); }
+        }
         lines.forEach(function (t, k) { doc.text(t, x0[1] + 2, y + 4.8 + k * 4); });
         res.cols.forEach(function (e, k) { if (bk.hours[e]) doc.text(hm(bk.hours[e]), xs[k] + cwP / 2, y + 4.8, { align: "center" }); });
         doc.text(bk.sum ? hm(bk.sum) : "", xg + cwG / 2, y + 4.8, { align: "center" });
@@ -2321,6 +2401,13 @@ function openReport(pre) {
       var r = await sb.rpc("firma_reports", { p_von: a, p_bis: b });
       if (r.error) { msg.textContent = rpMsg(r.error); msg.className = "status bad"; return; }
       res = rpBuild(nr, a, b, wochen, r.data || []); msg.textContent = "";
+      try { /* verschickte Regie-Rapporte: Haken beim R (Woche des Regie-Rapports) */
+        var rl = await sb.rpc("regie_list", { p_site: nr });
+        if (!rl.error && Array.isArray(rl.data)) {
+          var mons = []; rl.data.forEach(function (x) { var dd = rgNorm(x.data); if ((dd.sent || rgSentGet(nr, x.nr)) && dd.montag) mons.push(dd.montag); });
+          res.rows.forEach(function (d) { d.rSent = mons.some(function (m) { return d.day >= m && d.day <= key(addDays(fromKey(m), 6)); }); });
+        }
+      } catch (e) { }
       (async function () { try { var fl = await sb.rpc("foto_list_site", { p_kind: "rapport", p_site: nr }); if (!fl.error && Array.isArray(fl.data)) { for (var q = 0; q < fl.data.length; q++) { var x = fl.data[q], pr = String(x.ref).split("|"); if (pr[2] < a || pr[2] > b) continue; try { var g = await sb.rpc("foto_get", { p_id: x.id }); if (!g.error && g.data && g.data[0]) rFotos.push({ day: pr[2], data: g.data[0].data, w: g.data[0].w, h: g.data[0].h, created: null, note: dmy(fromKey(pr[2])) + " · " + (res.people && res.people[pr[0]] ? res.people[pr[0]] : pr[0]) + (x.note ? " · " + x.note : "") }); } catch (e) { } } rFotos.sort(function (p1, p2) { return p1.day < p2.day ? -1 : p1.day > p2.day ? 1 : 0; }); } } catch (e) { } rFotosOk = true; })();
       body.hidden = !res.rows.length;
       if (!res.rows.length) { msg.textContent = "Für diese Baustelle gibt es im Zeitraum keine Stunden und keine Rapporte."; return; }
@@ -2340,6 +2427,41 @@ function openReport(pre) {
 
   /* ---------- Farbtöne und Hersteller (Mitarbeiter lesen, Administratoren schreiben bei der Baustelle) ---------- */
   function closeColors() { var o = $("colors"); if (o) o.remove(); }
+  /* Farbtöne & Hersteller aller Baustellen als PDF (nur Baustellen mit Eintrag, aufsteigend nach Nummer) */
+  function buildColorsPdf() {
+    var J = window.jspdf && window.jspdf.jsPDF; if (!J) return null;
+    var sites = sitesList().filter(function (x) { return String(x.f || "").trim(); });
+    sites.sort(function (p, q) { return String(p.nr).localeCompare(String(q.nr), "de", { numeric: true }); });
+    if (!sites.length) return { empty: true };
+    var doc = new J({ orientation: "portrait", unit: "mm", format: "a4" });
+    var mx = 16, W = 178, top = 24, bottom = 280, LH = 5, y = top;
+    function head() {
+      doc.setFont("helvetica", "bold"); doc.setFontSize(16); doc.text("Farbtöne & Hersteller", mx, 16);
+      doc.setFont("helvetica", "normal"); doc.setFontSize(9); doc.text("Stand " + dmy(new Date()) + "  ·  " + sites.length + " Baustellen", mx + W, 16, { align: "right" });
+      doc.setLineWidth(0.3); doc.line(mx, 19, mx + W, 19);
+    }
+    head();
+    sites.forEach(function (s) {
+      var lines = []; String(s.f).replace(/\r/g, "").split("\n").forEach(function (ln) { ln = ln.replace(/\s+$/, ""); if (!ln) { lines.push(""); return; } doc.setFont("helvetica", "normal"); doc.setFontSize(10); doc.splitTextToSize(ln, W - 4).forEach(function (p) { lines.push(p); }); });
+      while (lines.length && !lines[lines.length - 1]) lines.pop();
+      var h0 = 7 + (s.n2 ? 4.5 : 0), i = 0, first = true;
+      if (y + h0 + 3 * LH > bottom) { doc.addPage(); head(); y = top; }
+      function title(cont) {
+        doc.setFont("helvetica", "bold"); doc.setFontSize(11.5); doc.text(String(s.nr) + "   " + (s.n || "") + (cont ? "  (Fortsetzung)" : ""), mx, y + 4.5);
+        y += 7;
+        if (s.n2 && !cont) { doc.setFont("helvetica", "normal"); doc.setFontSize(9); doc.text(String(s.n2), mx, y + 3); y += 4.5; }
+      }
+      title(false);
+      while (i < lines.length) {
+        if (y + LH > bottom) { doc.addPage(); head(); y = top; title(true); }
+        doc.setFont("helvetica", "normal"); doc.setFontSize(10); if (lines[i]) doc.text(lines[i], mx + 3, y + 3.6); y += LH; i++;
+      }
+      y += 2; doc.setLineWidth(0.15); doc.line(mx, y, mx + W, y); y += 5;
+    });
+    var n = doc.getNumberOfPages();
+    for (var p = 1; p <= n; p++) { doc.setPage(p); doc.setFont("helvetica", "normal"); doc.setFontSize(8); doc.text("Bader Design  ·  Farbtöne & Hersteller", mx, 289); doc.text("Seite " + p + " / " + n, mx + W, 289, { align: "right" }); }
+    return doc;
+  }
   function openColors(pre) {
     pre = (pre && pre.nr) ? pre : {};
     closeColors(); closeMenu(); closeSites(); closeMembers(); if (!pre.nr) closeBilanz(); closeReport(); hideSug();
@@ -2367,7 +2489,19 @@ function openReport(pre) {
     q.addEventListener("input", function () { sel = null; draw(); });
     q.addEventListener("focus", function () { list._f = 0; if (!sel) draw(); });
     close.addEventListener("click", closeColors);
-    var sheet = el("div", { "class": "sheet bil" }, [el("h2", { text: "Farbtöne & Hersteller" }), el("p", { text: "Suche die Baustelle. Darunter steht, was der Administrator dazu hinterlegt hat." }), q, list, card, el("div", { "class": "actions" }, [close])]);
+    var pr = el("button", { type: "button", "class": "btn", text: "Alle ausdrucken (PDF)" }), prMsg = el("div", { "class": "status", role: "status" });
+    pr.addEventListener("click", async function () {
+      pr.disabled = true; prMsg.textContent = "Liste wird erstellt …"; prMsg.className = "status";
+      try {
+        if (user && navigator.onLine) { try { await pullSites(); } catch (e) { } }
+        var d = buildColorsPdf();
+        if (!d) { prMsg.textContent = "Die PDF-Bibliothek ist nicht geladen. Bitte Internet prüfen und nochmals versuchen."; prMsg.className = "status bad"; }
+        else if (d.empty) { prMsg.textContent = "Es ist noch bei keiner Baustelle etwas hinterlegt."; prMsg.className = "status warn"; }
+        else { prMsg.textContent = ""; var t = new Date(); await sharePdf(d, "Farbtoene_Hersteller_" + t.getFullYear() + "-" + pad(t.getMonth() + 1) + "-" + pad(t.getDate()) + ".pdf", "Farbtöne & Hersteller"); }
+      } catch (e) { prMsg.textContent = "Das PDF konnte nicht erstellt werden."; prMsg.className = "status bad"; }
+      pr.disabled = false;
+    });
+    var sheet = el("div", { "class": "sheet bil" }, [el("h2", { text: "Farbtöne & Hersteller" }), el("p", { text: "Suche die Baustelle. Darunter steht, was der Administrator dazu hinterlegt hat." }), q, list, card, el("div", { "class": "actions" }, [pr, close]), prMsg]);
     var ov = el("div", { "class": "overlay sites", id: "colors", role: "dialog", "aria-modal": "true", "aria-label": "Farbtöne und Hersteller" }, [sheet]);
     ov.addEventListener("click", function (ev) { if (ev.target === ov) closeColors(); });
     document.body.appendChild(ov); card.hidden = true;
@@ -2380,7 +2514,7 @@ function openReport(pre) {
   var RG_ROWS = ["Polier / Meister", "Vorarbeiter: ", "Kundenmaler", "Maler: ", "Verputzer / Grundeur", "Hilfsarbeiter", "Maler: ", "Maler: ", "Lehrling    Lehrjahr", "", ""];
   var RG_MAT = 8, RG_DAYS = ["Mo", "Di", "Mi", "Do", "Fr"];
   function rgBlank() {
-    return { datum: "", auftraggeber: "", baustelle: "", montag: "", arbeiten: "", transporte: "", total: "",
+    return { sent: "", rnr: "", datum: "", auftraggeber: "", baustelle: "", montag: "", arbeiten: "", transporte: "", total: "",
       rows: RG_ROWS.map(function (l) { return { l: l, h: ["", "", "", "", ""] }; }), mat: [{ b: "Kleinmaterial", e: "", t: "" }] };
   }
   /* ---------- Unterschrift mit dem Finger (Vollbild, Handy quer halten) ---------- */
@@ -2441,12 +2575,15 @@ function openReport(pre) {
   }
   function rgNorm(d) {
     var b = rgBlank(); d = d || {};
-    ["datum", "auftraggeber", "baustelle", "montag", "arbeiten", "transporte", "total"].forEach(function (k) { if (typeof d[k] === "string") b[k] = d[k]; });
+    ["sent", "rnr", "datum", "auftraggeber", "baustelle", "montag", "arbeiten", "transporte", "total"].forEach(function (k) { if (typeof d[k] === "string") b[k] = d[k]; });
     if (Array.isArray(d.rows)) b.rows = RG_ROWS.map(function (l, i) { var r = d.rows[i] || {}; var h = Array.isArray(r.h) ? r.h : []; return { l: typeof r.l === "string" ? r.l : l, h: [0, 1, 2, 3, 4].map(function (k) { return String(h[k] == null ? "" : h[k]); }) }; });
     ["sig", "sigU"].forEach(function (k) { var g = d[k]; if (g && typeof g === "object" && typeof g.img === "string" && /^data:image\/png;base64,[A-Za-z0-9+\/=]+$/.test(g.img) && g.img.length < 40000) b[k] = { img: g.img, name: String(g.name || "").slice(0, 80), ts: String(g.ts || "").slice(0, 40), w: +g.w || 0, h: +g.h || 0 }; });
     if (Array.isArray(d.mat)) b.mat = d.mat.slice(0, RG_MAT).map(function (m) { m = m || {}; return { b: String(m.b || ""), e: String(m.e || ""), t: String(m.t || "") }; });
     return b;
   }
+  function rgSentKey(site, nr) { return "demo:rsent:" + site + "|" + nr; }
+  function rgSentGet(site, nr) { return nr ? (lsGet(rgSentKey(site, nr)) || "") : ""; }
+  function rgSentSet(site, nr, on) { if (!nr) return; try { if (on) lsSet(rgSentKey(site, nr), dm(new Date()) + pad(new Date().getFullYear() % 100)); else localStorage.removeItem(rgSentKey(site, nr)); } catch (e) { } }
   function rgSum(h) { var s = 0; h.forEach(function (x) { s += num(x); }); return s; }
   function rgFmt(v) { return v ? (Math.round(v * 100) / 100).toFixed(2) : ""; }
   function rgDayHead(montag) { /* "5.10" ... aus dem Montag */
@@ -2467,7 +2604,7 @@ function openReport(pre) {
         if (o.right) doc.text(t, cx[j + 1] - 1.2, y + 3.6, { align: "right" }); else doc.text(t, cx[i] + 1.2, y + 3.6); }
     }
     doc.setFont("helvetica", "bold"); doc.setFontSize(17); doc.text("Taglohn-Rapport", 105, y + 12, { align: "center" });
-    doc.setFont("helvetica", "normal"); doc.setFontSize(9); doc.text("Nr." + nr, 196, y + 7, { align: "right" });
+    doc.setFont("helvetica", "normal"); doc.setFontSize(9); doc.text("Nr." + (String(d.rnr || "").trim() || nr), 196, y + 7, { align: "right" });
     doc.setFontSize(9); y += 20;
     doc.text("Datum:", 78, y); doc.text(String(d.datum || ""), 100, y);
     doc.text("Auftraggeber:", 78, y + 4.2); doc.text(String(d.auftraggeber || ""), 100, y + 4.2);
@@ -2553,12 +2690,13 @@ function openReport(pre) {
       if (/regie_/i.test(m) && /schema cache|does not exist|could not find/i.test(m)) return "Die Regie-Rapporte sind in Supabase noch nicht eingerichtet (Zusatz-SQL fehlt). Technische Meldung: " + m.slice(0, 140);
       return sharedMsg(er);
     }
+    function nextNr() { var m = 0; (rows || []).forEach(function (r) { if (r.nr > m) m = r.nr; }); return m + 1; }
     function drawList() {
       list.textContent = ""; list.hidden = !rows.length;
       rows.forEach(function (r) {
         var d = rgNorm(r.data), u = r.updated ? new Date(r.updated) : null;
         var t = el("div", { "class": "t" }); t.appendChild(el("b", { text: "Nr. " + r.nr }));
-        t.appendChild(el("small", { text: (d.datum ? d.datum + " · " : "") + (d.auftraggeber || "") + (u ? " · geändert " + dm(u) + pad(u.getFullYear() % 100) : "") + (isStaff() && r.autor ? " · " + r.autor : "") + (d.sig || d.sigU ? " · ✍ " + (d.sig && d.sigU ? "beide unterschrieben" : d.sig ? "Auftraggeber unterschrieben" : "Unternehmung unterschrieben") : "") }));
+        t.appendChild(el("small", { text: [((d.sent || rgSentGet(site, r.nr)) ? "✓ verschickt " + (d.sent || rgSentGet(site, r.nr)) : ""), d.datum || "", d.auftraggeber || "", (u ? "geändert " + dm(u) + pad(u.getFullYear() % 100) : ""), (isStaff() && r.autor ? r.autor : ""), (d.sig || d.sigU ? "✍ " + (d.sig && d.sigU ? "beide unterschrieben" : d.sig ? "Auftraggeber unterschrieben" : "Unternehmung unterschrieben") : "")].filter(Boolean).join(" · ") }));
         list.appendChild(tapRow(t, function () { edit(r.nr, d); }));
       });
       if (!rows.length) say("Für diese Baustelle gibt es noch keinen Regie-Rapport." + (isStaff() ? "" : " Du siehst nur deine eigenen."), "");
@@ -2568,7 +2706,7 @@ function openReport(pre) {
       d = rgNorm(d); editing = { nr: nr };
       main.hidden = true; ed.hidden = false; $("regclose").hidden = true; ed.textContent = "";
       var tx = function (v, ph, al) { return el("input", { type: "text", value: v, placeholder: ph || "", "aria-label": al || ph || "" }); };
-      var fd = tx(d.datum, "z. B. 5.10.2026", "Datum"), fa = tx(d.auftraggeber, "Auftraggeber", "Auftraggeber"), fb = tx(d.baustelle, "Baustelle (Text für das PDF)", "Baustelle");
+      var fnr = tx(d.rnr, editing.nr ? "Nr. " + editing.nr + " (automatisch)" : "automatisch: Nr. " + nextNr(), "Regie-Nr."), fd = tx(d.datum, "z. B. 5.10.2026", "Datum"), fa = tx(d.auftraggeber, "Auftraggeber", "Auftraggeber"), fb = tx(d.baustelle, "Baustelle (Text für das PDF)", "Baustelle");
       var fm = el("input", { type: "date", "aria-label": "Montag der Woche" }); fm.value = d.montag || "";
       var fw = el("textarea", { "class": "bulk", "aria-label": "Ausgeführte Arbeiten", maxlength: "5000" }); fw.value = d.arbeiten; fw.style.minHeight = "130px";
       var grid = el("div", { "class": "rg" });
@@ -2586,9 +2724,23 @@ function openReport(pre) {
         matBox.appendChild(b); matBox.appendChild(e); matBox.appendChild(t); mrows.push({ b: b, e: e, t: t });
       }
       d.mat.forEach(addMat); if (!d.mat.length) addMat();
+      /* Kleinmaterial: Total = alle Stunden aller Zeilen zusammen (bleibt von Hand änderbar) */
+      function kmSum() { var t = 0; rin.forEach(function (r) { t += rgSum(r.hs.map(function (h) { return h.value; })); }); return t; }
+      function kmSync(ev) {
+        mrows.forEach(function (m) {
+          if (!/kleinmaterial/i.test(m.b.value)) return;
+          if (ev && ev.target === m.t) { m.t.dataset.man = "1"; return; }
+          if (m.t.dataset.man === "1") return;
+          var v = rgFmt(kmSum()); m.t.value = v; if (v && !m.e.value.trim()) m.e.value = "Std.";
+        });
+      }
+      mrows.forEach(function (m) { if (/kleinmaterial/i.test(m.b.value) && m.t.value.trim() && m.t.value.trim() !== rgFmt(kmSum())) m.t.dataset.man = "1"; });
+      ed.addEventListener("input", kmSync); kmSync();
       var addM = el("button", { type: "button", "class": "btn", text: "+ Material-Zeile" }); addM.addEventListener("click", function () { addMat(); });
       var ft = tx(d.total, "Total (Text)", "Total");
       var fcR = fotoCtl("regie", site + "|" + (editing.nr || "n" + fotoRid())); if (editing.nr) fcR.load();
+      var sentVal = d.sent || (editing.nr ? rgSentGet(site, editing.nr) : "");
+      function setSent(on) { sentVal = on ? dm(new Date()) + pad(new Date().getFullYear() % 100) : ""; rgSentSet(site, editing.nr, on); }
       var emsg = el("div", { "class": "status", role: "status" });
       var sv = el("button", { type: "button", "class": "btn primary", text: "Speichern" }), pf = el("button", { type: "button", "class": "btn", text: "Als PDF" });
       var del = el("button", { type: "button", "class": "btn", text: "Löschen" }); del.hidden = !(isStaff() && nr);
@@ -2620,20 +2772,41 @@ function openReport(pre) {
       });
       rm.addEventListener("click", function () { if (!confirm("Unterschrift entfernen? Der Rapport kann danach wieder geändert werden.")) return; SL[curK].st = null; sigDraw(); });
       function collect() {
-        return { datum: fd.value.trim(), auftraggeber: fa.value.trim(), baustelle: fb.value.trim(), montag: fm.value, arbeiten: fw.value, transporte: ftr.value.trim(), total: ft.value.trim(),
+        return { sent: sentVal, rnr: fnr.value.trim().slice(0, 12), datum: fd.value.trim(), auftraggeber: fa.value.trim(), baustelle: fb.value.trim(), montag: fm.value, arbeiten: fw.value, transporte: ftr.value.trim(), total: ft.value.trim(),
           rows: rin.map(function (r) { return { l: r.l.value, h: r.hs.map(function (h) { return h.value.trim(); }) }; }),
           mat: mrows.map(function (m) { return { b: m.b.value.trim(), e: m.e.value.trim(), t: m.t.value.trim() }; }).filter(function (m) { return m.b || m.e || m.t; }), sig: SL.A.st, sigU: SL.U.st };
       }
       var title = el("h3", { text: "Regie-Rapport " + (editing.nr ? "Nr. " + editing.nr : "(neu)") + " · Baustelle " + site });
       ed.appendChild(title);
-      ed.appendChild(field("Datum", fd)); ed.appendChild(field("Auftraggeber", fa)); ed.appendChild(field("Baustelle", fb));
+      ed.appendChild(field("Regie-Nr. (leer lassen = automatisch)", fnr)); ed.appendChild(field("Datum", fd)); ed.appendChild(field("Auftraggeber", fa)); ed.appendChild(field("Baustelle", fb));
       ed.appendChild(field("Montag der Woche (füllt die Datumszeile)", fm));
       ed.appendChild(field("Ausgeführte Arbeiten", fw)); ed.appendChild(field("Stunden", grid)); ed.appendChild(field("Transporte", ftr));
       ed.appendChild(field("Material (Bezeichnung · Einheit · Total)", matBox)); ed.appendChild(addM); ed.appendChild(field("Total", ft));
       ed.appendChild(fcR.node); ed.appendChild(sigBox);
+      var sentBtn = el("button", { type: "button", "class": "btn" });
+      function sentSync() { var v = sentVal; sentBtn.hidden = false; sentBtn.textContent = v ? "✓ Verschickt " + v + " (Markierung entfernen)" : "Als verschickt markieren"; sentBtn.setAttribute("aria-pressed", v ? "true" : "false"); }
+      sentBtn.addEventListener("click", async function () {
+        setSent(!sentVal); sentSync();
+        if (editing.nr) { await silentSave(); es(sentVal ? "Als verschickt markiert." : "Markierung entfernt.", "ok"); return; }
+        if (!sentVal) { es(""); return; }
+        es("Einen Moment …");
+        var okS = false; try { okS = await ensureSaved(); } catch (e) { }
+        if (okS) { rgSentSet(site, editing.nr, true); es("Gespeichert als Nr. " + editing.nr + " und als verschickt markiert.", "ok"); }
+        else { setSent(false); sentSync(); es("Nicht markiert: Das Rapport konnte nicht gespeichert werden (Internet?).", "bad"); }
+      });
+      ed.appendChild(sentBtn);
       ed.appendChild(emsg); ed.appendChild(el("div", { "class": "actions" }, [sv, pf, del, back]));
-      sigDraw();
+      sigDraw(); sentSync();
       var es = function (t, c) { emsg.textContent = t || ""; emsg.className = "status" + (c ? " " + c : ""); };
+      async function silentSave() { try { if (sb && user && navigator.onLine && !isDemo() && editing.nr) await sb.rpc("regie_save", { p_site: site, p_nr: editing.nr, p_data: collect() }); } catch (e) { } }
+      async function ensureSaved() {
+        if (editing.nr) return true;
+        if (!sb || !user || !navigator.onLine || isDemo()) return false;
+        var r = await sb.rpc("regie_save", { p_site: site, p_nr: null, p_data: collect() });
+        if (r.error) { es(regieMsg(r.error), "bad"); return false; }
+        await fcR.move(site + "|" + r.data); editing.nr = r.data; title.textContent = "Regie-Rapport Nr. " + r.data + " · Baustelle " + site; sentSync();
+        return true;
+      }
       sv.addEventListener("click", async function () {
         if (isDemo()) { es(DEMO_MSG, "bad"); return; }
         if (!sb || !user || !navigator.onLine) { es("Keine Verbindung. Zum Speichern brauchst du Internet.", "bad"); return; }
@@ -2646,16 +2819,18 @@ function openReport(pre) {
         } catch (e) { es(regieMsg(e), "bad"); }
       });
       pf.addEventListener("click", async function () {
+        es("Einen Moment …");
+        try { await ensureSaved(); } catch (e) { }
         var doc = null; try { doc = buildRegiePdf(editing.nr || "", collect()); } catch (e) { }
         if (!doc) { es("Das PDF konnte nicht erstellt werden.", "bad"); return; }
         try { fotoPdf(doc, await fcR.all(), "Regie-Rapport " + (editing.nr ? "Nr. " + editing.nr : "") + " · " + site); } catch (e) { }
         if (isDemo()) { demoPdf(doc, "Regie-Rapport"); return; }
-        var fn = "Regie-Rapport_" + site + "_Nr" + (editing.nr || "neu") + ".pdf", blob = doc.output("blob"), file = null;
+        var fn = "Regie-Rapport_" + site + "_Nr" + (fnr.value.trim().replace(/[^\w\-]+/g, "") || editing.nr || "neu") + ".pdf", blob = doc.output("blob"), file = null;
         try { file = new File([blob], fn, { type: "application/pdf" }); } catch (e) { }
         if (isMobile() && file && navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
-          try { await navigator.share({ files: [file], title: fn.replace(/\.pdf$/, "") }); return; } catch (e) { if (e && e.name === "AbortError") return; }
+          try { await navigator.share({ files: [file], title: fn.replace(/\.pdf$/, "") }); setSent(true); sentSync(); await silentSave(); es("Als verschickt markiert.", "ok"); return; } catch (e) { if (e && e.name === "AbortError") return; }
         }
-        showFallback(blob, doc, fn, file, "Regie-Rapport");
+        showFallback(blob, doc, fn, file, "Regie-Rapport"); setSent(true); sentSync(); await silentSave(); es("");
       });
       del.addEventListener("click", async function () {
         if (!editing.nr || !confirm("Regie-Rapport Nr. " + editing.nr + " löschen?")) return;
@@ -2729,7 +2904,7 @@ function openReport(pre) {
     if (am) { o.frei = am; o.any = true; }
     var ef = effs(list), r1 = 0, r2 = 0;
     list.forEach(function (e, ei) {
-      var a = tmin(e.von), b = tmin(e.bis); if (a === null || b === null || b <= a) return;
+      if (!calcRow(e, ef[ei]).hasTime) return;
       var N = ef[ei].night, D = ef[ei].gross - N, p = num(e.pause), pD = Math.min(p, D), pN = Math.min(Math.max(0, p - pD), N);
       o.tag += D - pD; o.night += N - pN; r1 += ef[ei].n1 || 0; r2 += ef[ei].n2 || 0;
     });
@@ -3052,6 +3227,30 @@ function openReport(pre) {
     }).sort(function (a, b) { return (a.name || a.em).localeCompare(b.name || b.em); });
   }
   function closeFeier() { var o = $("feier"); if (o) o.remove(); }
+  function openLegal() {
+    var old = $("legal"); if (old) old.remove();
+    var T = [
+      ["Privater Testbetrieb", "«Wochenrapport» von Bader Design (David Bader, Stüdlerstrasse 23, 8913 Ottenbach, Tel. 079 889 89 46, davidbader@gmx.ch) ist ein privater Test mit einem kleinen, persönlich eingeladenen Personenkreis. Es gibt keinen Anspruch auf Verfügbarkeit, Richtigkeit, Support oder Weiterbetrieb. Die Nutzung erfolgt auf eigenes Risiko. Die App kann jederzeit geändert, unterbrochen oder eingestellt werden."],
+      ["Berechnungen sind unverbindlich", "Stunden, Pausen, Reisezeiten, Überstunden, Saldi, Regie-Auswertungen und Kalkulationen sind Hilfsmittel und nicht rechtsverbindlich. Massgebend sind die offiziellen Unterlagen des Arbeitgebers. Bitte Eingaben prüfen, bevor ein Rapport oder PDF weitergegeben wird, und wichtige Daten zusätzlich über «Sicherung» speichern."],
+      ["Haftung", "Der Anbieter haftet, soweit gesetzlich zulässig, nicht für Schäden aus der Nutzung oder Nichtnutzung der App. Dazu zählen falsche oder fehlende Berechnungen, Datenverlust, Ausfälle, weitergegebene Rapporte und PDFs, Ausfälle von Drittdiensten sowie indirekte Schäden. Vorbehalten bleiben Absicht und grobe Fahrlässigkeit."],
+      ["Pflichten", "Zugangsdaten geheim halten, keine fremden Konten oder Daten nutzen, keine unnötigen Personendaten Dritter erfassen. Der Zugang kann jederzeit gesperrt oder gelöscht werden. Es gilt Schweizer Recht, Gerichtsstand Zürich."],
+      ["Datenschutz: welche Daten", "Konto (E-Mail, Name, Rolle, Passwort nur verschlüsselt), Arbeitszeiten, Absenzen, Baustellen, Wochen- und Regie-Rapporte, Fotos und Belege, Unterschriften, Kalkulationen sowie technische Angaben beim Aufruf (z. B. IP-Adresse). Keine Werbung, kein Tracking, keine Standortdaten."],
+      ["Wer die Daten sieht", "Sie sehen Ihre eigenen Daten. Büro, Admin und Inhaber sehen je nach Rolle die Daten der Mitarbeitenden ihrer Firma. Der Anbieter hat als Entwickler und Betreiber technisch Zugriff auf alle Daten. Er nutzt ihn nur für Betrieb, Support und Fehlerbehebung und gibt die Daten nicht weiter. Rapporte und PDFs geben Sie selbst weiter."],
+      ["Dienstleister", "Supabase (Datenbank und Anmeldung, Standort Zürich), GitHub Pages (Bereitstellung der App), cdnjs und jsDelivr (Hilfsbibliotheken). Dabei können Daten ins Ausland gelangen. Die Datenbank wird nachts automatisch gesichert. Die Sicherungen liegen in einem privaten Speicher bei GitHub und werden nach 30 Tagen gelöscht, eine gelöschte Person kann deshalb noch bis zu 30 Tage darin enthalten sein. Auf Ihrem Gerät speichert die App Einträge und einen Zwischenspeicher, damit sie auch ohne Empfang startet."],
+      ["Ihre Rechte", "Auskunft, Berichtigung, Löschung und Herausgabe Ihrer Daten sowie Widerruf einer Einwilligung: Mail an davidbader@gmx.ch. Beschwerde ist beim Eidg. Datenschutz- und Öffentlichkeitsbeauftragten (EDÖB) möglich. Bei Ende des Tests oder auf Verlangen werden die Daten gelöscht, soweit keine Aufbewahrungspflicht des Arbeitgebers besteht."]
+    ];
+    var kids = [el("h2", { text: "Nutzung & Datenschutz" })];
+    T.forEach(function (t) { kids.push(el("h3", { text: t[0], style: "margin:14px 0 4px;font-size:15px" })); kids.push(el("p", { text: t[1], style: "margin:0;font-size:14px;line-height:1.5" })); });
+    kids.push(el("p", { text: "Stand: 31. Oktober 2026", style: "margin:14px 0 0;font-size:12px;opacity:.7" }));
+    var cl = el("button", { type: "button", "class": "btn primary", text: "Schliessen" });
+    kids.push(el("div", { "class": "actions", style: "margin-top:14px" }, [cl]));
+    var ov = el("div", { "class": "overlay sites", id: "legal", role: "dialog", "aria-modal": "true", "aria-label": "Nutzung und Datenschutz" }, [el("div", { "class": "sheet", style: "max-height:88vh;overflow:auto" }, kids)]);
+    ov.style.zIndex = "100001";
+    function shut() { ov.remove(); }
+    cl.addEventListener("click", shut); ov.addEventListener("click", function (e) { if (e.target === ov) shut(); });
+    document.body.appendChild(ov);
+  }
+  window.__openLegal = openLegal;
   function openFeiertage(y) {
     closeFeier(); y = y || new Date().getFullYear();
     var WD = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
@@ -3101,19 +3300,162 @@ function openReport(pre) {
     });
     document.body.appendChild(ov); iu.focus();
   }
+  /* Stundenübersicht als PDF (gleiche Zahlen wie auf dem Bildschirm) */
+  function buildGleitPdf(L, firma) {
+    var J = window.jspdf && window.jspdf.jsPDF; if (!J) return null;
+    var doc = new J({ orientation: "portrait", unit: "mm", format: "a4" });
+    var mx = 16, W = 178, top = 26, bottom = 280, LH = 5.2, y = top, y0 = L.y, mo = L.mo;
+    function head() {
+      doc.setFont("helvetica", "bold"); doc.setFontSize(16); doc.text("Stundenübersicht " + MNAME[mo] + " " + y0, mx, 16);
+      doc.setFont("helvetica", "normal"); doc.setFontSize(9); doc.text((firma ? firma + "  ·  " : "") + "Stand " + dmy(new Date()), mx + W, 16, { align: "right" });
+      doc.setLineWidth(0.3); doc.line(mx, 19.5, mx + W, 19.5);
+    }
+    function row(l, v, b) { doc.setFont("helvetica", b ? "bold" : "normal"); doc.setFontSize(10); doc.text(String(l), mx + 3, y + 3.8); doc.text(String(v), mx + W - 3, y + 3.8, { align: "right" }); y += LH; }
+    function sec(t) { y += 1.5; doc.setFont("helvetica", "bold"); doc.setFontSize(9); doc.text(t.toUpperCase(), mx + 3, y + 3.5); y += LH; }
+    function tg(m) { return " (" + String(Math.round(m / 480 * 10) / 10).replace(".", ",") + " Tage)"; }
+    function sep() { y += 1.5; doc.setLineWidth(0.15); doc.line(mx, y, mx + W, y); y += 6; }
+    function title(o) { doc.setFont("helvetica", "bold"); doc.setFontSize(12); doc.text(o.name || o.em, mx, y + 4.5); y += 6.5; if (o.name && o.em) { doc.setFont("helvetica", "normal"); doc.setFontSize(9); doc.text(String(o.em), mx, y + 3); y += 4.5; } }
+    function room(h) { if (y + h > bottom) { doc.addPage(); head(); y = top; } }
+    head();
+    var any = false;
+    L.res.forEach(function (o) {
+      any = true;
+      var K = L.kx[o.em] || {}, ue0 = pmin(K.ue_vorjahr), us0 = pmin(K.ue_start), fa = Math.round(rate(K.f_anspruch) * 480), fv0 = Math.round(rate(K.f_vortrag) * 480), fer = o.fer || 0;
+      var kto = !!(o.has || ue0 || us0 || fa || fv0);
+      room(o.has ? (kto ? 100 : 56) : 22 + (kto ? 44 : 0));
+      title(o);
+      if (o.has && o.lim) { doc.setFont("helvetica", "normal"); doc.setFontSize(8.5); doc.text("Gerechnet bis und mit KW " + isoWeek(o.lim).w + " (nur ganze Wochen, die laufende Woche zählt ab Samstag).", mx + 3, y + 3.3); y += 5; }
+      if (!o.has) { doc.setFont("helvetica", "normal"); doc.setFontSize(10); doc.text("Noch keine Daten.", mx + 3, y + 3.8); y += LH; }
+      else [["Gearbeitet", hm(o.work)], ["Absenzen (Ferien/Krank/Unfall/Frei)", hm(o.abs)], ["Zuschläge", hm(o.zus)], ["Feiertage bezahlt", hm(o.fth)], ["Ist-Konto", hm(o.ist), 1], ["Soll-Konto", hm(o.soll), 1], ["Saldo Monat +/−", hmS(o.saldo), 1], ["Saldo Jahr kumuliert", hmS(o.kum), 1]].forEach(function (x) { row(x[0], x[1], x[2]); });
+      if (kto) {
+        var frj = o.frj || 0, vjAb = Math.min(frj, Math.max(ue0, 0));
+        sec("Überstunden-Konto"); row("Überstunden letztes Jahr", hmS(ue0 - vjAb), 1); row("Überstunden aktuelles Jahr", hmS(us0 + (o.kum || 0) - frj + vjAb), 1);
+        if (frj) row("Frei bezogen (zuerst vom letzten Jahr abgezogen)", hmS(frj));
+        sec("Ferien-Konto"); row("Anspruch " + y0, hmS(fa) + tg(fa)); row("Übertrag letztes Jahr", hmS(fv0) + tg(fv0)); row("Bezogen", hmS(fer) + tg(fer)); row("Rest Ferien", hmS(fa + fv0 - fer) + tg(fa + fv0 - fer), 1);
+      }
+      sep();
+    });
+    if (L.tmps.length) {
+      any = true; room(30); sec("Temporäre · nur Gesamtzeit im Monat"); y += 1;
+      L.tmps.forEach(function (o) { room(8); row(o.name || o.em, o.has ? hm(o.work) : "Noch keine Daten", 1); });
+    }
+    if (!any) return { empty: true };
+    var n = doc.getNumberOfPages();
+    for (var p = 1; p <= n; p++) { doc.setPage(p); doc.setFont("helvetica", "normal"); doc.setFontSize(8); doc.text("Bader Design  ·  Stundenübersicht  ·  unverbindliche Hilfsrechnung, es gelten die offiziellen Unterlagen des Arbeitgebers", mx, 289); doc.text("Seite " + p + " / " + n, mx + W, 289, { align: "right" }); }
+    return doc;
+  }
+  /* Stundenübersicht für das ganze Jahr als PDF: pro Mitarbeiter eine Seite mit allen Monaten (oder nur ein Mitarbeiter) */
+  function buildGleitYearPdf(Y, firma, only) {
+    var J = window.jspdf && window.jspdf.jsPDF; if (!J) return null;
+    var doc = new J({ orientation: "portrait", unit: "mm", format: "a4" });
+    var mx = 16, W = 178, top = 26, bottom = 280, LH = 5.4, y = top, yr = Y.y;
+    var COLS = [["Monat", 34], ["Gearbeitet", 18], ["Absenzen", 18], ["Zuschläge", 18], ["Feiertage", 18], ["Ist", 18], ["Soll", 18], ["Saldo", 18], ["Kumuliert", 18]];
+    function head() {
+      doc.setFont("helvetica", "bold"); doc.setFontSize(16); doc.text("Stundenübersicht " + yr, mx, 16);
+      doc.setFont("helvetica", "normal"); doc.setFontSize(9); doc.text((firma ? firma + "  ·  " : "") + "Stand " + dmy(new Date()), mx + W, 16, { align: "right" });
+      doc.setLineWidth(0.3); doc.line(mx, 19.5, mx + W, 19.5);
+    }
+    function newPage() { doc.addPage(); head(); y = top; }
+    function title(name, em) { doc.setFont("helvetica", "bold"); doc.setFontSize(13); doc.text(name || em, mx, y + 4.5); y += 7; if (name && em) { doc.setFont("helvetica", "normal"); doc.setFontSize(9); doc.text(String(em), mx, y + 2.5); y += 5; } y += 1; }
+    function trow(cells, bold, line) {
+      var x = mx; doc.setFont("helvetica", bold ? "bold" : "normal"); doc.setFontSize(9);
+      COLS.forEach(function (c, i) { var v = cells[i] == null ? "" : String(cells[i]); if (i === 0) doc.text(v, x + 1, y + 3.8); else doc.text(v, x + c[1] - 1, y + 3.8, { align: "right" }); x += c[1]; });
+      y += LH; if (line) { doc.setLineWidth(line); doc.line(mx, y - 0.6, mx + W, y - 0.6); }
+    }
+    function row(l, v, b) { doc.setFont("helvetica", b ? "bold" : "normal"); doc.setFontSize(10); doc.text(String(l), mx + 3, y + 3.8); doc.text(String(v), mx + W - 3, y + 3.8, { align: "right" }); y += LH; }
+    function sec(t) { y += 2; doc.setFont("helvetica", "bold"); doc.setFontSize(9); doc.text(t.toUpperCase(), mx + 3, y + 3.5); y += LH; }
+    function tg(m) { return " (" + String(Math.round(m / 480 * 10) / 10).replace(".", ",") + " Tage)"; }
+    function room(h) { if (y + h > bottom) newPage(); }
+    function find(mo, em) { var a = Y.P[mo] || []; for (var i = 0; i < a.length; i++) { if (a[i].em === em) return a[i]; } return null; }
+    head();
+    var first = true, any = false;
+    Y.emps.forEach(function (e) {
+      if (only && e.em !== only) return;
+      any = true; if (!first) newPage(); first = false;
+      title(e.name, e.em);
+      trow(["Monat", "Gearbeitet", "Absenzen", "Zuschläge", "Feiertage", "Ist", "Soll", "Saldo", "Kumuliert"], true, 0.3);
+      var sw = 0, sa = 0, sz = 0, sf = 0, si = 0, ss = 0, sm = 0, kum = 0, lastO = null;
+      for (var mo = 0; mo < 12; mo++) {
+        var o = find(mo, e.em);
+        if (!o || !o.has || !(o.work || o.abs || o.zus || o.fth || o.soll)) { trow([MNAME[mo], "–"], false, 0.1); continue; }
+        lastO = o; sw += o.work; sa += o.abs; sz += o.zus; sf += o.fth; si += o.ist; ss += o.soll; sm += o.saldo; kum = o.kum;
+        trow([MNAME[mo], hm(o.work), hm(o.abs), hm(o.zus), hm(o.fth), hm(o.ist), hm(o.soll), hmS(o.saldo), hmS(o.kum)], false, 0.1);
+      }
+      trow(["Total " + yr, hm(sw), hm(sa), hm(sz), hm(sf), hm(si), hm(ss), hmS(sm), hmS(kum)], true, 0.3);
+      var K = Y.kx[e.em] || {}, ue0 = pmin(K.ue_vorjahr), us0 = pmin(K.ue_start), fa = Math.round(rate(K.f_anspruch) * 480), fv0 = Math.round(rate(K.f_vortrag) * 480);
+      if (lastO || ue0 || us0 || fa || fv0) {
+        var o2 = lastO || {}, fer = o2.fer || 0, frj = o2.frj || 0;
+        var vjAb = Math.min(frj, Math.max(ue0, 0));
+        room(60); sec("Überstunden-Konto (Stand Ende des letzten Monats mit Daten)");
+        row("Überstunden letztes Jahr", hmS(ue0 - vjAb), 1); row("Überstunden aktuelles Jahr", hmS(us0 + (o2.kum || 0) - frj + vjAb), 1);
+        if (frj) row("Frei bezogen (zuerst vom letzten Jahr abgezogen)", hmS(frj));
+        sec("Ferien-Konto"); row("Anspruch " + yr, hmS(fa) + tg(fa)); row("Übertrag letztes Jahr", hmS(fv0) + tg(fv0)); row("Bezogen", hmS(fer) + tg(fer)); row("Rest Ferien", hmS(fa + fv0 - fer) + tg(fa + fv0 - fer), 1);
+      }
+    });
+    if (!only && Y.tmps.length) {
+      if (!first) newPage(); first = false; any = true;
+      doc.setFont("helvetica", "bold"); doc.setFontSize(13); doc.text("Temporäre · Gesamtzeit pro Monat", mx, y + 4.5); y += 9;
+      Y.tmps.forEach(function (e) {
+        room(12 * LH + 14);
+        doc.setFont("helvetica", "bold"); doc.setFontSize(11); doc.text(e.name || e.em, mx, y + 4); y += 6.5; var tot = 0;
+        for (var mo = 0; mo < 12; mo++) { var o = find(mo, e.em); if (o && o.has && o.work) { tot += o.work; row(MNAME[mo], hm(o.work)); } }
+        row("Total " + yr, hm(tot), 1); y += 3;
+      });
+    }
+    if (!any) return { empty: true };
+    var n = doc.getNumberOfPages();
+    for (var p = 1; p <= n; p++) { doc.setPage(p); doc.setFont("helvetica", "normal"); doc.setFontSize(8); doc.text("Bader Design  ·  Stundenübersicht " + yr + "  ·  unverbindliche Hilfsrechnung, es gelten die offiziellen Unterlagen des Arbeitgebers", mx, 289); doc.text("Seite " + p + " / " + n, mx + W, 289, { align: "right" }); }
+    return doc;
+  }
   function openGleit() {
     closeGleit(); var now = new Date(), busy = false, adm = isAdmin(), mine = memberGet(), meMail = String((user && user.email) || "").toLowerCase(), meTemp = !!(mine && mine.rolle === "temporaer");
     var mi = el("input", { type: "month", "aria-label": "Monat" }); mi.value = now.getFullYear() + "-" + pad(now.getMonth() + 1);
-    var go = el("button", { type: "button", "class": "btn primary", text: "Anzeigen" }), cl = el("button", { type: "button", "class": "btn", text: "Schliessen" });
+    var go = el("button", { type: "button", "class": "btn primary", text: "Anzeigen" }), cl = el("button", { type: "button", "class": "btn", text: "Schliessen" }), pdfB = el("button", { type: "button", "class": "btn", text: "Monat als PDF" }), yB = el("button", { type: "button", "class": "btn", text: "Ganzes Jahr als PDF" }), selE = el("select", { "aria-label": "Mitarbeiter für das Jahres-PDF" }), last = null; selE.hidden = true;
     var msg = el("div", { "class": "status", role: "status" }), list = el("div", { "class": "slist", role: "list" }); list.style.maxHeight = "58vh";
-    var sheet = el("div", { "class": "sheet" }, [el("h2", { text: "Stundenübersicht" }), el("p", { text: adm ? "Alle Mitarbeiter: Soll (8 Std./Tag) gegen Ist, Feiertage bezahlt, ab dem ersten Tag mit Daten. Bei Temporären nur die Gesamtzeit pro Monat." : (meTemp ? "Deine Gesamtzeit pro Monat." : "Deine Stunden: Soll (8 Std./Tag) gegen Ist, Feiertage bezahlt, ab dem ersten Tag mit Daten.") }), mi, el("div", { "class": "actions" }, [go, cl]), msg, list]);
+    yB.addEventListener("click", async function () {
+      if (!last) { msg.textContent = "Bitte zuerst «Anzeigen» tippen."; return; }
+      var yy = last.y; msg.textContent = "Das Jahr wird berechnet …"; yB.disabled = true;
+      try {
+        var rowsAll, tmpMail = {};
+        if (adm) {
+          if (!sb || !navigator.onLine) { msg.textContent = "Keine Verbindung."; return; }
+          var r = await sb.rpc("firma_wochen", { p_von: key(mondayOf(new Date(yy, 0, 1))), p_bis: key(new Date(yy, 11, 31)) });
+          if (r.error) { msg.textContent = sharedMsg(r.error); return; }
+          rowsAll = r.data || [];
+          try { var ml = await sb.rpc("members_list"); if (!ml.error && Array.isArray(ml.data)) ml.data.forEach(function (x) { if (x.rolle === "temporaer") tmpMail[String(x.email).toLowerCase()] = 1; }); } catch (e) { }
+        } else {
+          rowsAll = []; localKeys().forEach(function (wk) { var o = localWeek(wk); if (o) rowsAll.push({ email: meMail || "ich", week: wk, data: o }); });
+          if (meTemp) tmpMail[meMail || "ich"] = 1;
+        }
+        var kx = {};
+        if (sb && user && navigator.onLine) { try { var kr = await sb.rpc("konten_list", { p_jahr: yy }); if (!kr.error && Array.isArray(kr.data)) kr.data.forEach(function (x) { kx[String(x.email).toLowerCase()] = x; }); } catch (e) { } }
+        var P = [], emps = {}, tmps = {};
+        for (var mo = 0; mo < 12; mo++) {
+          var all = gleitCalc(rowsAll, yy, mo); P.push(all);
+          all.forEach(function (o) { var tgt = tmpMail[o.em] ? tmps : emps; if (!tgt[o.em]) tgt[o.em] = { em: o.em, name: o.name || "" }; if (o.name) tgt[o.em].name = o.name; });
+        }
+        function lst(m) { return Object.keys(m).map(function (k) { return m[k]; }).sort(function (a, b) { return String(a.name || a.em).localeCompare(String(b.name || b.em), "de"); }); }
+        var d = buildGleitYearPdf({ y: yy, P: P, emps: lst(emps), tmps: lst(tmps), kx: kx }, (memberGet() || {}).firma || "", selE.hidden ? "" : selE.value);
+        if (!d) { msg.textContent = "Die PDF-Bibliothek ist nicht geladen. Bitte Internet prüfen."; return; }
+        if (d.empty) { msg.textContent = "Für dieses Jahr gibt es keine Daten."; return; }
+        msg.textContent = ""; await sharePdf(d, "Stundenuebersicht_" + yy + (selE.hidden || !selE.value ? "" : "_" + selE.value.split("@")[0]) + ".pdf", "Stundenübersicht " + yy);
+      } catch (e) { msg.textContent = sharedMsg(e); } finally { yB.disabled = false; }
+    });
+    pdfB.addEventListener("click", async function () {
+      if (!last) { msg.textContent = "Bitte zuerst «Anzeigen» tippen."; return; }
+      var d = buildGleitPdf(last, (memberGet() || {}).firma || "");
+      if (!d) { msg.textContent = "Die PDF-Bibliothek ist nicht geladen. Bitte Internet prüfen."; return; }
+      if (d.empty) { msg.textContent = "Keine Daten für dieses PDF."; return; }
+      msg.textContent = ""; await sharePdf(d, "Stundenuebersicht_" + last.y + "-" + pad(last.mo + 1) + ".pdf", "Stundenübersicht");
+    });
+    var sheet = el("div", { "class": "sheet" }, [el("h2", { text: "Stundenübersicht" }), el("p", { text: adm ? "Alle Mitarbeiter: Soll (8 Std./Tag) gegen Ist, Feiertage bezahlt, ab dem ersten Tag mit Daten. Bei Temporären nur die Gesamtzeit pro Monat." : (meTemp ? "Deine Gesamtzeit pro Monat." : "Deine Stunden: Soll (8 Std./Tag) gegen Ist, Feiertage bezahlt, ab dem ersten Tag mit Daten.") }), mi, el("div", { "class": "actions" }, [go, pdfB, yB, cl]), selE, msg, list]);
     var ov = el("div", { "class": "overlay sites", id: "gleit", role: "dialog", "aria-modal": "true", "aria-label": "Stundenübersicht" }, [sheet]);
     function line(l, v, b) { return el("div", { style: "display:flex;justify-content:space-between;gap:8px;font-variant-numeric:tabular-nums" + (b ? ";font-weight:700" : "") }, [el("span", { text: l }), el("span", { text: v })]); }
     async function load() {
       if (busy) return; var p = (mi.value || "").split("-"); if (p.length < 2) return; var y = +p[0], mo = +p[1] - 1;
       if (adm && !sb) { msg.textContent = "Bitte zuerst anmelden."; return; }
       if (adm && !navigator.onLine) { msg.textContent = "Keine Verbindung."; return; }
-      busy = true; msg.textContent = "Einen Moment …";
+      busy = true; msg.textContent = "Einen Moment …"; last = null;
       try {
         var rowsAll, tmpMail = {};
         if (adm) { /* Administrator: alle Mitarbeiter der Firma */
@@ -3129,6 +3471,8 @@ function openReport(pre) {
         if (sb && user && navigator.onLine) { try { var kr = await sb.rpc("konten_list", { p_jahr: y }); if (!kr.error && Array.isArray(kr.data)) kr.data.forEach(function (x) { kx[String(x.email).toLowerCase()] = x; }); } catch (e) { } }
         msg.textContent = ""; list.textContent = "";
         var allP = gleitCalc(rowsAll, y, mo), res = allP.filter(function (o) { return !tmpMail[o.em]; }), tmps = allP.filter(function (o) { return tmpMail[o.em]; });
+        last = { y: y, mo: mo, res: res, tmps: tmps, kx: kx };
+        (function () { var old = selE.value; selE.textContent = ""; selE.appendChild(el("option", { value: "", text: "Jahres-PDF: alle Mitarbeiter" })); res.forEach(function (o) { selE.appendChild(el("option", { value: o.em, text: "Jahres-PDF: nur " + (o.name || o.em) })); }); selE.value = old; if (selE.value !== old) selE.value = ""; selE.hidden = !(adm && res.length > 1); })();
         if (!res.length && !tmps.length) list.appendChild(el("div", { "class": "status", text: "Keine Daten." }));
         res.forEach(function (o) {
           var c = el("div", { "class": "srow stack", role: "listitem" }, [el("b", { text: o.name || o.em }), el("div", { "class": "status", text: o.name ? o.em : "" })]);
@@ -4203,11 +4547,11 @@ function openReport(pre) {
     closeRegieGen(); var busy = false, res = null, mon = mondayOf(new Date());
     var wk = el("input", { type: "date", "aria-label": "Montag der Woche" }); wk.value = key(mon);
     var prev = el("button", { type: "button", "class": "btn", text: "‹", "aria-label": "Vorherige Woche" }), next = el("button", { type: "button", "class": "btn", text: "›", "aria-label": "Nächste Woche" });
-    var msg = el("div", { "class": "status", role: "status" }), pbox = el("div", {}), lbox = el("div", {}), tot = el("div", { "class": "status" });
+    var msg = el("div", { "class": "status", role: "status" }), pbox = el("div", {}), lbox = el("div", {}), tot = el("div", { "class": "status" }), sentBox = el("div", { role: "status" }), wkRg = [];
     var go = el("button", { type: "button", "class": "btn primary", text: "Regie-Rapport erstellen" }), cl = el("button", { type: "button", "class": "btn", text: "Schliessen" });
     var info = siteByNr(nr), pers = [], lines = [], extra = [];
     var sheet = el("div", { "class": "sheet bil" }, [el("h2", { text: "Regie-Rapport aus Rapporten" }), el("p", { text: nr + (info && info.n ? " · " + info.n : "") }),
-      el("div", { style: "display:flex;gap:6px;align-items:center" }, [prev, wk, next]), msg,
+      el("div", { style: "display:flex;gap:6px;align-items:center" }, [prev, wk, next]), sentBox, msg,
       el("div", { "class": "lbl", text: "Mitarbeitende (Stunden aus den Wochenrapporten)" }), pbox,
       el("div", { "class": "lbl", text: "Ausgeführte Arbeiten (aus den Baustellenrapporten)" }), lbox, tot, el("div", { "class": "actions" }, [go, cl]),
       el("div", { "class": "status", text: "Der Regie-Rapport öffnet sich zum Prüfen und Ändern. Erst mit «Speichern» wird er abgelegt." })]);
@@ -4254,12 +4598,28 @@ function openReport(pre) {
         var r = await sb.rpc("firma_reports", { p_von: a, p_bis: b }); var reps = r.error ? [] : (r.data || []);
         res = rpBuild(nr, a, b, w.data || [], reps); msg.textContent = ""; draw();
       } catch (e) { msg.textContent = sharedMsg(e); msg.className = "status bad"; }
+      /* gibt es für diese Woche schon ein Regie-Rapport? (Warnung gegen doppeltes Erstellen oder Verschicken) */
+      wkRg = []; sentBox.textContent = ""; sentBox.className = "";
+      try {
+        var rl = await sb.rpc("regie_list", { p_site: nr });
+        if (!rl.error && Array.isArray(rl.data)) {
+          rl.data.forEach(function (x) { var dd = rgNorm(x.data); if (dd.montag === key(m0)) wkRg.push({ nr: x.nr, sent: dd.sent || rgSentGet(nr, x.nr) }); });
+          if (wkRg.length) {
+            var sn = wkRg.filter(function (q) { return q.sent; });
+            sentBox.className = "status " + (sn.length ? "ok" : "warn");
+            sentBox.style.cssText = "font-weight:600;margin:8px 0";
+            sentBox.textContent = sn.length ? "✓ Verschickt am " + sn.map(function (q) { return q.sent; }).join(", ")
+              : "Für diese Woche gibt es schon: " + wkRg.map(function (q) { return "Nr. " + q.nr; }).join(", ") + " (noch nicht als verschickt markiert).";
+          }
+        }
+      } catch (e) { }
       busy = false;
     }
     function shift(n) { var m0 = mondayVal() || mondayOf(new Date()); wk.value = key(addDays(m0, n * 7)); load(); }
     prev.addEventListener("click", function () { shift(-1); }); next.addEventListener("click", function () { shift(1); }); wk.addEventListener("change", load);
     go.addEventListener("click", function () {
       var m0 = mondayVal(); if (!m0 || !res) return;
+      if (wkRg.length && !confirm("Für diese Woche gibt es schon " + wkRg.map(function (q) { return "Nr. " + q.nr + (q.sent ? " (verschickt " + q.sent + ")" : ""); }).join(", ") + ". Trotzdem ein neues Regie-Rapport erstellen?")) return;
       var rows = [], over = false;
       pers.forEach(function (p) { if (!p.cb.checked) return; rows.push({ l: p.fs.value + ": " + p.name, h: p.min.map(function (m) { return m ? hm(m) : ""; }) }); });
       extra.forEach(function (x) { if (x.cb.checked && x.nm.value.trim()) rows.push({ l: x.fs.value + ": " + x.nm.value.trim(), h: ["", "", "", "", ""] }); });
@@ -4422,6 +4782,7 @@ function openReport(pre) {
     if (isAdmin()) { items.push(["Spesen", openSpesen]); items.push(["Kalkulator", openKK]); items.push(["Novacolor", openNC]); items.push(["Naturofloor", openNF]); items.push(["Ausmass", openM2]); items.push(["Dateien ablegen", openDateien]); items.push(["Auswertung pro Baustelle", openBilanz]); items.push(["Neue Registrierungen & Mitarbeiter", openMembers]); }
     if (isBuero()) { items = [["Baustellen-Liste", function () { openSites("search"); }], ["Baustelle hinzufügen", function () { openSites("add"); }], ["Regie-Rapport", function () { openRegie(); }], ["Farbtöne & Hersteller", function () { openColors(); }], ["Auswertung pro Baustelle", openBilanz], ["Mitarbeiter hinzufügen", openMembers]]; }
     if (isOwner()) { items.push(["Monats- / Jahresübersicht", openUebersicht]); items.push(["Inhaber: Abos", openAbos]); items.push(["Inhaber: Firma wechseln", openOwner]); }
+    items.push(["Nutzung & Datenschutz", openLegal]);
     var box = el("div", { "class": "drawer" }, [el("div", { style: "display:flex;align-items:center;justify-content:space-between;gap:12px" }, [el("h2", { text: "Menü", style: "margin:0" }), themeSwitch()])]);
     items.forEach(function (it) { var b = el("button", { type: "button", "class": "btn", text: it[0] }); b.addEventListener("click", function () { closeMenu(); it[1](); }); box.appendChild(b); });
     var ov = el("div", { "class": "overlay menu", id: "menu", role: "dialog", "aria-modal": "true", "aria-label": "Menü" }, [box]);
@@ -4429,6 +4790,8 @@ function openReport(pre) {
     document.body.appendChild(ov); $("menuBtn").setAttribute("aria-expanded", "true");
   }
   $("menuBtn").addEventListener("click", openMenu);
+  $("legalLink").addEventListener("click", function (e) { e.preventDefault(); openLegal(); });
+  $("regLegal").addEventListener("click", function (e) { e.preventDefault(); e.stopPropagation(); openLegal(); });
 
   window.addEventListener("online", function () { rpFlush(); });
 
@@ -4589,7 +4952,7 @@ function openReport(pre) {
   document.addEventListener("visibilitychange", function () { if (!document.hidden) { checkNewWeek(); if (user) pullAll(); setTimeout(dienstagCheck, 1500); setTimeout(feierCheck, 2500); } });
   window.addEventListener("pageshow", checkNewWeek); window.addEventListener("focus", checkNewWeek);
   setInterval(checkNewWeek, 60000);
-  setTimeout(function () { var s = document.getElementById("splash"); if (!s) return; s.classList.add("off"); setTimeout(function () { s.remove(); }, 700); }, 2300);
+  setTimeout(function () { var s = document.getElementById("splash"); if (!s) return; s.classList.add("off"); setTimeout(function () { s.remove(); }, 400); }, 1050);
   setInterval(function () { if (user && qGet().length) flush(); }, 30000);
 })();
 </script>
