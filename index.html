@@ -595,14 +595,14 @@ window.supabase={createClient:function(){var cb=null,session=null;window.__reps=
    if(name==='sites_write'){var m=me();if(!m||m.rolle!=='admin')return{error:{message:'Keine Berechtigung'}};
      (args.p_items||[]).forEach(function(x){window.__sites=window.__sites.filter(function(r){return !(r.firma===m.firma&&r.nr===x.nr)});var old=window.__sites.filter(function(r){return r.firma===m.firma&&r.nr===x.nr})[0];window.__sites.push({firma:m.firma,nr:x.nr,name:x.n,name2:x.n2,hin:x.h,zur:x.z,farben:(typeof x.f==='string')?x.f:(old?old.farben:'')})});
      window.__sites=window.__sites.filter(function(r){return !(r.firma===m.firma&&(args.p_del||[]).indexOf(r.nr)>=0)});return{error:null}}
-   if(name==='members_list'){var m=me();if(!m||m.rolle!=='admin')return{error:{message:'Keine Berechtigung'}};return{data:Object.keys(window.__members).filter(function(e){return window.__members[e].firma===m.firma}).map(function(e){return{email:e,rolle:window.__members[e].rolle}}),error:null}}
+   if(name==='members_list'){var m=me();if(!m||(m.rolle!=='admin'&&m.rolle!=='buero'))return{error:{message:'Keine Berechtigung'}};return{data:Object.keys(window.__members).filter(function(e){return window.__members[e].firma===m.firma}).map(function(e){return{email:e,rolle:window.__members[e].rolle}}),error:null}}
    if(name==='member_set'){var m=me();if(!m||m.rolle!=='admin')return{error:{message:'Keine Berechtigung'}};var o=window.__members[args.p_email];if(o&&o.firma!==m.firma)return{error:{message:'Diese E-Mail gehört schon zu einer anderen Firma'}};window.__members[args.p_email]={firma:m.firma,rolle:args.p_rolle};return{error:null}}
    if(name==='member_remove'){var m=me();if(!m||m.rolle!=='admin')return{error:{message:'Keine Berechtigung'}};var o=window.__members[args.p_email];if(o&&o.firma===m.firma)delete window.__members[args.p_email];return{error:null}}
-   if(name==='firma_wochen'){var m=me();if(!m||m.rolle!=='admin')return{error:{message:'Keine Berechtigung'}};window.__calls.push([args.p_von,args.p_bis]);
+   if(name==='firma_wochen'){var m=me();if(!m||(m.rolle!=='admin'&&m.rolle!=='buero'))return{error:{message:'Keine Berechtigung'}};window.__calls.push([args.p_von,args.p_bis]);
      return{data:window.__all.filter(function(r){var x=window.__members[r.email];return x&&x.firma===m.firma&&r.week>=args.p_von&&r.week<=args.p_bis}),error:null}}
    if(name==='report_save'){var m=me();if(!m)return{error:{message:'Keine Berechtigung'}};var em=session.user.email;window.__reps=window.__reps.filter(function(r){return !(r.email===em&&r.site_nr===args.p_nr&&r.day===args.p_day)});if(args.p_body)window.__reps.push({email:em,site_nr:args.p_nr,day:args.p_day,body:args.p_body});return{error:null}}
    if(name==='reports_mine'){var em=session.user.email;return{data:window.__reps.filter(function(r){return r.email===em}),error:null}}
-   if(name==='firma_reports'){var m=me();if(!m||m.rolle!=='admin')return{error:{message:'Keine Berechtigung'}};return{data:window.__reps,error:null}}
+   if(name==='firma_reports'){var m=me();if(!m||(m.rolle!=='admin'&&m.rolle!=='buero'))return{error:{message:'Keine Berechtigung'}};return{data:window.__reps,error:null}}
 
    if(name.indexOf('kalk_')===0){var m=me();if(!m||m.rolle!=='admin')return{error:{message:'Keine Berechtigung'}};window.__kalk=window.__kalk||[];
      if(name==='kalk_list')return{data:window.__kalk.filter(function(r){return r.firma===m.firma}),error:null};
@@ -957,7 +957,7 @@ window.supabase={createClient:function(){var cb=null,session=null;window.__reps=
   var LEGAL_VER = "2026-10-31";
   function legalOk() { return lsGet("demo:legal") === LEGAL_VER; }
   function legalGate() {
-    if (!user || legalOk() || $("legalGate")) return;
+    if (!user || legalOk() || $("legalGate") || window.__demoAs || isDemo()) return;
     var ok = el("input", { type: "checkbox", id: "lgOk", style: "width:22px;height:22px;flex:0 0 auto;margin:1px 0 0" });
     var lk = el("a", { href: "#", text: "Nutzungsbedingungen und Datenschutzerklärung" });
     lk.addEventListener("click", function (e) { e.preventDefault(); openLegal(); });
