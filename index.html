@@ -1580,6 +1580,18 @@ window.supabase={createClient:function(){var cb=null,session=null;window.__reps=
   }
 
   function markSent(wk) { if (!wk) return; lsSet("demo:sent:" + wk, "1"); if (wk === state.week && !state.sent) { state.sent = dm(new Date()).slice(0, 6); try { persist(true); } catch (e) { } } }
+  function askSent(wk) { /* iPhone meldet bei manchen Apps (z. B. WhatsApp) «abgebrochen», obwohl gesendet wurde: kurz nachfragen */
+    if (!wk) return;
+    var old = $("sentov"); if (old) old.remove();
+    var close = function () { var o = $("sentov"); if (o) o.remove(); };
+    var yes = el("button", { type: "button", "class": "btn primary", text: "Ja, gesendet" }), no = el("button", { type: "button", "class": "btn", text: "Nein" });
+    yes.addEventListener("click", function () { close(); markSent(wk); setStatus("Woche gespeichert und als versendet markiert.", "ok"); });
+    no.addEventListener("click", close);
+    var sheet = el("div", { "class": "sheet" }, [el("h2", { text: "Hast du den Rapport gesendet?" }), el("p", { text: "Das Handy meldet manchmal «abgebrochen», auch wenn die Nachricht gesendet wurde, zum Beispiel bei WhatsApp." }), el("div", { "class": "actions", style: "margin-top:14px" }, [yes, no])]);
+    var ov = el("div", { "class": "overlay", id: "sentov", role: "dialog", "aria-modal": "true", "aria-label": "Gesendet?" }, [sheet]);
+    ov.addEventListener("click", function (ev) { if (ev.target === ov) close(); });
+    document.body.appendChild(ov); yes.focus();
+  }
   async function deliver(blob, doc, fn, saved, wkSent) {
     var mobile = isMobile(), file = null;
     try { file = new File([blob], fn, { type: "application/pdf" }); } catch (e) { }
@@ -1590,7 +1602,7 @@ window.supabase={createClient:function(){var cb=null,session=null;window.__reps=
         await navigator.share({ files: [file], title: fn.replace(/\.pdf$/, "") }); /* ohne Text: Mail-Apps machen daraus sonst einen zweiten Anhang */
         markSent(wkSent); await saved; setStatus("Woche gespeichert. PDF geteilt: " + fn, "ok"); return;
       } catch (e) {
-        if (e && e.name === "AbortError") { await saved; setStatus("Teilen abgebrochen. Die Woche ist gespeichert. Tippe nochmals auf den Knopf, um das PDF zu teilen.", ""); return; }
+        if (e && e.name === "AbortError") { await saved; setStatus("Teilen abgebrochen. Die Woche ist gespeichert. Tippe nochmals auf den Knopf, um das PDF zu teilen.", ""); askSent(wkSent); return; }
       }
     }
     /* 2. Vorschau mit Links zum manuellen Sichern */
